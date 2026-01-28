@@ -1,8 +1,7 @@
-
-require("dotenv").config();
 const express = require("express");
 const axios = require("axios");
-const cors = require("cors")
+const cors = require("cors");
+const connectDB = require("./DB/connectDB");
 const app = express();
 
 app.use(
@@ -12,13 +11,15 @@ app.use(
 );
 app.use(express.json());
 
+connectDB();
+
 app.get("/health", (req, res) => {
   res.send("Server says heyyy :)");
 });
 
 app.post("/translate", async (req, res) => {
   try {
-    const parsedAudio =  null;
+    const parsedAudio = null; // This is supposd to be the data coming from the third party that parses audio into a format that wispr flow can use. Check out https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_Recording_API or https://github.com/keithwhor/wavtools
 
     // const wisprFlowRes = await axios.post(
     //   "https://platform-api.wisprflow.ai/api/v1/dash/api",
@@ -30,7 +31,7 @@ app.post("/translate", async (req, res) => {
     //     },
     //   },
     // );
-    res.send(wisprFlowRes);
+    res.json({ res: wisprFlowRes });
   } catch (error) {
     console.error(error);
 

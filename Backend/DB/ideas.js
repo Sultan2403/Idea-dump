@@ -1,16 +1,25 @@
 const ideas = require("./Models/ideaModel");
 
 const addNewIdea = async (req, res) => {
-  const existing = await ideas.find(req.body);
-  if (existing) res.status(401).json("idea exists already");
-  await ideas.insertOne(req.body);
-  const all = ideas.find();
-  console.log(all);
+  try {
+    await ideas.insertOne(req.body);
+    const all = await ideas.find();
+    console.log(all);
+    res.status(201).json({msg: "success", all})
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
 };
 
-const getAllIdeas =  async(req,res)=>{
-    const fetchedIdeas = await ideas.find()
-    res.json(fetchedIdeas)
-}
+const getAllIdeas = async (req, res) => {
+  try {
+    const fetchedIdeas = await ideas.find();
+    res.json(fetchedIdeas);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
 
-module.exports = getAllIdeas, addNewIdea
+module.exports = { addNewIdea, getAllIdeas };
+
+module.exports = { getAllIdeas, addNewIdea };

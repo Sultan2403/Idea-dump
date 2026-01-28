@@ -2,7 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
 const connectDB = require("./DB/connectDB");
-const getAllIdeas = require("./DB/ideas");
+const {getAllIdeas, addNewIdea }= require("./DB/ideas");
 const app = express();
 
 app.use(
@@ -17,6 +17,8 @@ connectDB();
 app.get("/health", (req, res) => {
   res.send("Server says heyyy :)");
 });
+
+app.post("/new-idea", addNewIdea)
 
 app.get("/ideas", getAllIdeas);
 

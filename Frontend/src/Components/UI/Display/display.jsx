@@ -1,22 +1,33 @@
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 
 export default function Display() {
   return (
-    <div className="p-6 bg-cream min-h-[200px] rounded-xl shadow-md flex flex-col gap-4">
-      <h2 className="text-xl font-semibold text-softBrown">Add a New Idea</h2>
+    <div className="px-10 py-8">
+      {/* Title */}
+      <h2 className="text-2xl font-medium text-softBrown mb-6">
+        Dump your thoughts
+      </h2>
+
+      {/* Idea input */}
       <TextField
-        label="Your idea..."
-        variant="outlined"
+        placeholder="Start typing your idea..."
+        multiline
+        minRows={4}
         fullWidth
-        className="bg-white rounded"
+        variant="standard"
+        slotProps={{
+          htmlInput: {
+            disableUnderline: true,
+            className: "text-lg text-gray-800 leading-relaxed",
+          },
+        }}
+        className="bg-transparent"
       />
-      <Button
-        variant="contained"
-        className="bg-softBrown hover:bg-[#926b49] text-cream"
-      >
-        Submit
-      </Button>
+
+      {/* Subtle hint */}
+      <p className="mt-3 text-sm text-gray-400">
+        Press Enter to save • Ideas autosave
+      </p>
     </div>
   );
 }

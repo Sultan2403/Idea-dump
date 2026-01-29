@@ -10,9 +10,10 @@ export default function Display() {
 
       {/* Idea input */}
       <TextField
-        placeholder="Start typing your idea..."
+        placeholder="Start typing your idea or speak it instead :)"
         multiline
         minRows={4}
+        maxRows={8}
         fullWidth
         variant="standard"
         slotProps={{

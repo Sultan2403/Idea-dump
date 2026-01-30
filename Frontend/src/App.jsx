@@ -4,16 +4,19 @@ import { useEffect } from "react";
 import Main from "./Components/Main/main";
 import Display from "./Components/UI/Display/display";
 
+import VoiceTest from "./Utils/audioRecorder";
+
 function App() {
   useEffect(() => {
-    useIdeas();
+ 
+  useIdeas()
   }, []);
   return (
     <BrowserRouter>
       {" "}
       <Routes>
         <Route path="/" element={<Main />}>
-          <Route index element={<Display/>}/>
+          <Route index element={<VoiceTest/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

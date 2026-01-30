@@ -5,7 +5,7 @@ export default function Display() {
     <div className="px-10 py-8">
       {/* Title */}
       <h2 className="text-2xl font-medium text-softBrown mb-6">
-        Dump your thoughts
+        Never lose a thought again
       </h2>
 
       {/* Idea input */}

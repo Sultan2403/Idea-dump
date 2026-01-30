@@ -1,26 +1,33 @@
-import { useEffect, useState } from "react";
-import getIdeas from "../Apis/ideas";
+import { useState } from "react";
+import ideasApi from "../Apis/api.ideas";
 
 export default function useIdeas() {
+  const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [ideas, setIdeas] = useState([]);
 
-  useEffect(() => {
-    async function fetchIdeas() {
-      setLoading(true);
-      try {
-        const ideas = await getIdeas();
-        setIdeas(ideas);
-        setLoading(false);
-      } catch (error) {
-        setError({ error, msg: error.message });
-        setLoading(false);
-      }
+  // single executor
+  const execute = async (apiCall) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await apiCall;
+      setResult(data);
+    } catch (err) {
+      setError(err);
+      throw err;
+    } finally {
+      setLoading(false);
     }
+  };
 
-    fetchIdeas();
-  }, []);
+  const methods = {
+    getAll: () => execute(() => ideasApi.getAll()),
+    getOne: (id) => execute(() => ideasApi.getOne(id)),
+    create: (payload) => execute(() => ideasApi.create(payload)),
+    update: ({ id, payload }) => execute(() => ideasApi.update({ id, payload })),
+    remove: (id) => execute(() => ideasApi.remove(id)),
+  };
 
-  return { loading, error, ideas };
+  return { result, loading, error, ...methods };
 }

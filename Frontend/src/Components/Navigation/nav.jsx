@@ -1,4 +1,6 @@
 import { NavLink } from "react-router-dom";
+import {  PlusCircleIcon } from "lucide-react";
+import Button from "@mui/material/Button";
 import useIdeas from "../../Hooks/useIdeas";
 import { Fragment } from "react";
 
@@ -10,6 +12,9 @@ export default function Nav() {
       <h2 className="text-xl font-semibold text-softBrown mb-6">
         Idea Dump :)
       </h2>
+      <NavLink to={"/"}>
+        <Button startIcon={<PlusCircleIcon />}>New Idea</Button>
+      </NavLink>
       <h2 className="text-xl font-md mb-6 text-primaryText">
         Your recent ideas
       </h2>
@@ -38,13 +43,12 @@ export default function Nav() {
             ideas.map((idea) => (
               <NavLink to={`/idea/${idea._id}`}>
                 <li
-                key={idea._id}
-                className="p-2 rounded hover:bg-borderGray cursor-pointer"
-              >
-                {idea.title}
-              </li>
+                  key={idea._id}
+                  className="p-2 rounded hover:bg-borderGray cursor-pointer"
+                >
+                  {idea.title}
+                </li>
               </NavLink>
-              
             ))
           )}
         </ul>

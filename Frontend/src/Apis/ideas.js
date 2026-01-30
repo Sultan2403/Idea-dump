@@ -1,14 +1,12 @@
-import axios from "axios"
+import axios from "axios";
 
-export default async function useIdeas() {
-  const url = "http://localhost:5000/ideas";
+export default async function getIdeas() {
   try {
-    console.log("fetching...");
-    const fetchedIdeas = (await axios.get(url)).data;
-    console.log(fetchedIdeas);
+    const url = "http://localhost:5000/ideas";
+    const fetchedIdeas = await axios.get(url)
+    return fetchedIdeas.data
   } catch (error) {
-
+    console.error(error, error.message)
+    return error.message
   }
 }
-
-useIdeas();

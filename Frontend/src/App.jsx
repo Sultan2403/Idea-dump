@@ -17,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />}>
           <Route index element={<Display/>}/>
+          <Route path="voice" element={<VoiceTest/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -5,7 +5,7 @@ const ideasApi = {
   getOne: (id) => api.get(`/ideas/${id}`),
   create: (payload) => api.post("/ideas", payload),
   createBulk: (payload) => api.post("/ideas/bulk", payload),
-  update: ({id, update}) => api.patch(`/ideas/${id}`, update),
+  update: ({id, update}) => api.put(`/ideas/${id}`, update),
   delete: (id) => api.delete(`/ideas/${id}`),
 };
 

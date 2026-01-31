@@ -11,21 +11,23 @@ export default function useIdeas() {
     setError(null);
     try {
       const data = await apiCall();
+      console.log(data);
+
       setResult((prev) => (data ? data : prev));
     } catch (err) {
       setError(true);
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
   const methods = {
-    getAll: () => execute(() => ideasApi.getAll()),
-    getOne: (id) => execute(() => ideasApi.getOne(id)),
-    create: (payload) => execute(() => ideasApi.create(payload)),
-    update: ({ id, payload }) =>
-      execute(() => ideasApi.update({ id, payload })),
-    remove: (id) => execute(() => ideasApi.remove(id)),
+    getAllIdeas: () => execute(() => ideasApi.getAll()),
+    getOneIdea: (id) => execute(() => ideasApi.getOne(id)),
+    createIdea: (idea) => execute(() => ideasApi.create(idea)),
+    updateIdea: ({ id, update }) => execute(() => ideasApi.update({ id, update })),
+    removeIdea: (id) => execute(() => ideasApi.remove(id)),
   };
 
   return { result, loading, error, ...methods };

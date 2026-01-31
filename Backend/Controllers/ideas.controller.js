@@ -12,7 +12,6 @@ const addNewIdea = async (req, res) => {
   }
 };
 
-
 const getAllIdeas = async (req, res) => {
   try {
     const fetchedIdeas = await ideas.find();
@@ -65,19 +64,32 @@ const updateIdea = async (req, res) => {
     return res.status(400).json({ message: "Invalid ID" });
   }
 
+  if (!req.body) {
+    return res.status(400).json({ message: "Bad request" });
+  }
+
   const { text, title } = req.body;
+
+  if (!text && !title) {
+    return res.status(400).json({ message: "Bad Request" });
+  }
+
+  const update = {
+    title,
+    text,
+  };
+
   try {
-    const updated = await ideas.findByIdAndUpdate(
-      req.params.id,
-      { text, title },
-      { new: true, runValidators: true },
-    );
+    const updated = await ideas.findByIdAndUpdate(req.params.id, update, {
+      new: true,
+      runValidators: true,
+    });
 
     if (!updated) {
-      return res.status(404).json({ message: "Not found" });
+      return res.status(404).json({ message: "Idea not found" });
     }
 
-    res.status(200).json({ message: "Idea updated successfully" });
+    res.status(200).json({ message: "Idea updated successfully", updated });
   } catch (error) {
     console.error("An error occoured", error.message);
     res.status(400).json({ message: "An error occured", error: error.message });

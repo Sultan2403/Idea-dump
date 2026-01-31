@@ -1,15 +1,19 @@
 import { NavLink } from "react-router-dom";
-import { PlusCircleIcon } from "lucide-react";
+import { PlusCircleIcon, RefreshCwIcon, RefreshCwOff } from "lucide-react";
 import Button from "@mui/material/Button";
 import useIdeas from "../../Hooks/useIdeas";
 import { useEffect } from "react";
 
 export default function Nav() {
-  const ideasHook = useIdeas();
-  const { result, error, loading } = ideasHook;
+
+  const { result, error, loading, getAllIdeas } = useIdeas();
+
+  const fetchIdeas = () => {
+   getAllIdeas();
+  };
 
   useEffect(() => {
-    ideasHook.getAll();
+    fetchIdeas();
   }, []);
 
   return (
@@ -20,7 +24,17 @@ export default function Nav() {
       <p className="text-sm text-secondaryText font-sans mb-4 leading-relaxed">
         Never lose a thought again.
       </p>
-      <div className="mt-4 mb-6 space-y-2">
+      <div className="mt-4 mb-6 flex flex-col gap-3 space-y-2">
+        <Button
+          fullWidth
+          startIcon={<RefreshCwIcon />}
+          onClick={fetchIdeas}
+          loading={loading}
+          variant="contained"
+          className="!bg-softBrown text-white hover:bg-softBrown/90"
+        >
+          Refresh
+        </Button>{" "}
         <NavLink to="/">
           <Button
             fullWidth
@@ -50,7 +64,12 @@ export default function Nav() {
       )}
 
       {/* Error */}
-      {error && <p className="text-red-500 text-sm">Failed to load ideas</p>}
+      {error && (
+        <p className="text-red-500 text-sm">
+          Failed to load ideas. <br /> Check your internet connection and try
+          again.
+        </p>
+      )}
 
       {/* Idea List */}
       {!loading && !error && (

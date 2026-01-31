@@ -17,7 +17,9 @@ export default function Nav() {
       <h2 className="text-xl font-semibold text-softBrown mb-6">
         Idea Dump :)
       </h2>
-      <p className="">Never lose a thought again.</p>
+      <p className="text-sm text-secondaryText font-sans mb-4 leading-relaxed">
+        Never lose a thought again.
+      </p>
       <div className="mt-4 mb-6 space-y-2">
         <NavLink to="/">
           <Button

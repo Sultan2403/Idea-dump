@@ -8,7 +8,7 @@ const {
   updateIdea,
   deleteAnIdea,
   getOneIdea
-} = require("../Controllers/ideasControllers");
+} = require("../Controllers/ideas.controller");
 
 router.get("/", getAllIdeas);
 router.get("/:id", getOneIdea);

@@ -2,8 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./DB/Connections/connectDB");
 const app = express();
-const ideasRouter = require("./Routers/ideaRouter");
-const getText = require("./Controllers/audioToText");
+const ideasRouter = require("./Routers/ideas.route");
+const audioRouter = require("./Routers/speech-to-text.route")
 
 app.use(
   cors({
@@ -19,7 +19,7 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/ideas", ideasRouter);
-app.use("/speech", getText);
+app.use("/speech", audioRouter);
 
 module.exports = app;
 

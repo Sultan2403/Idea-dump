@@ -1,11 +1,8 @@
-
 import TextField from "@mui/material/TextField";
 
-export default function InputField({value = "", setValue}) {
-  
+export default function InputField({ value = "", setValue, props }) {
   return (
     <>
-
       <TextField
         placeholder="Start typing your idea or speak it out instead :)"
         multiline
@@ -21,9 +18,9 @@ export default function InputField({value = "", setValue}) {
             className: "text-lg text-primaryText leading-relaxed",
           },
         }}
+        {...props}
         className="bg-transparent"
       />
-      
     </>
   );
 }

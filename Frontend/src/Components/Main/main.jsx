@@ -5,18 +5,19 @@ export default function Main() {
 
   
   return (
-    <div className="w-full flex h-full">
-      <div className="w-[20%]">
+    <div className="flex h-screen w-full">
+      <div className="w-[20%] h-full overflow-y-auto">
         <Nav />
       </div>
-      <div className="w-[80%]">
-        <header className="flex justify-between items-center p-4 border-b border-borderGray">
-        <h1 className="text-xl font-semibold">Dump Your Thoughts</h1>
-          {/* <button class="px-4 py-2 bg-softBrown text-cream rounded hover:bg-[#926b49] transition">
-            Login
-          </button> */}
+      <div className="flex-1 flex flex-col">
+        <header className="flex justify-between items-center p-4 border-b border-borderGray bg-cream shadow-soft">
+          <h1 className="text-2xl ml-8 font-serif font-semibold text-primaryText">
+            Dump Your Thoughts
+          </h1>
         </header>
-        <Outlet />
+        <main className="flex-1 overflow-y-auto p-4">
+          <Outlet />
+        </main>
       </div>
     </div>
   );

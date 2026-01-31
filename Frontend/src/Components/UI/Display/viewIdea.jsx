@@ -19,7 +19,7 @@ export default function ViewIdea() {
   if (error)
     return (
       <div className="p-4 text-red-500">
-        Failed to load idea: {error.message || "Unknown error"}
+        Failed to load idea. Check your internet connection and try again.
       </div>
     );
 

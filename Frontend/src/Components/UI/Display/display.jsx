@@ -1,34 +1,31 @@
 import TextField from "@mui/material/TextField";
+import { useState } from "react";
 
 export default function Display() {
+  const [text, setText] = useState("");
   return (
-    <div className="px-10 py-8">
-      {/* Title */}
-      <h2 className="text-2xl font-medium text-softBrown mb-6">
+    <div className="px-10 py-8 bg-offwhite min-h-[400px] rounded-lg shadow-soft">
+      <h2 className="text-2xl font-serif font-medium text-softBrown mb-6">
         Never lose a thought again
       </h2>
 
-      {/* Idea input */}
       <TextField
-        placeholder="Start typing your idea or speak it instead :)"
+        placeholder="Start typing your idea or speak it out instead :)"
         multiline
         minRows={4}
         maxRows={8}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
         fullWidth
         variant="standard"
         slotProps={{
           htmlInput: {
             disableUnderline: true,
-            className: "text-lg text-gray-800 leading-relaxed",
+            className: "text-lg text-primaryText leading-relaxed",
           },
         }}
         className="bg-transparent"
       />
-
-      {/* Subtle hint */}
-      <p className="mt-3 text-sm text-gray-400">
-        Press Enter to save • Ideas autosave
-      </p>
     </div>
   );
 }

@@ -12,16 +12,25 @@ export default function Nav() {
     ideasHook.getAll();
   }, []);
 
-
-  
   return (
     <nav className="bg-cream border-r border-borderGray min-h-screen w-full p-4 flex flex-col">
       <h2 className="text-xl font-semibold text-softBrown mb-6">
         Idea Dump :)
       </h2>
-      <NavLink to={"/"}>
-        <Button startIcon={<PlusCircleIcon />}>New Idea</Button>
-      </NavLink>
+      <p className="">Never lose a thought again.</p>
+      <div className="mt-4 mb-6 space-y-2">
+        <NavLink to="/">
+          <Button
+            fullWidth
+            startIcon={<PlusCircleIcon />}
+            variant="contained"
+            className="!bg-softBrown !text-white hover:!bg-softBrown/90"
+          >
+            New Idea
+          </Button>
+        </NavLink>
+      </div>
+
       <h2 className="text-sm uppercase tracking-wide text-secondaryText mb-4">
         Your recent ideas
       </h2>

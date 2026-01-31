@@ -10,7 +10,8 @@ module.exports = {
         // Base cream palette
         cream: "#FAF7F2",
         offwhite: "#F8F5F0",
-        primaryText: "#1E1E1E",
+        primaryText: "#2C2C2C", // a touch softer, still readable
+
         secondaryText: "#6B6B6B",
         borderGray: "#E6E1D8",
         // Accent colors

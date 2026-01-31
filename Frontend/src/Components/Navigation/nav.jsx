@@ -15,14 +15,14 @@ export default function Nav() {
 
   
   return (
-    <nav className="bg-cream border-r border-borderGray w-64 min-h-screen p-4 flex flex-col">
+    <nav className="bg-cream border-r border-borderGray min-h-screen w-full p-4 flex flex-col">
       <h2 className="text-xl font-semibold text-softBrown mb-6">
         Idea Dump :)
       </h2>
       <NavLink to={"/"}>
         <Button startIcon={<PlusCircleIcon />}>New Idea</Button>
       </NavLink>
-      <h2 className="text-xl font-md mb-6 text-primaryText">
+      <h2 className="text-sm uppercase tracking-wide text-secondaryText mb-4">
         Your recent ideas
       </h2>
 
@@ -32,30 +32,33 @@ export default function Nav() {
           {[...Array(5)].map((_, i) => (
             <div
               key={i}
-              className="h-6 bg-gray-200 rounded animate-pulse"
+              className="h-6 bg-borderGray/70 rounded animate-pulse"
             ></div>
           ))}
         </div>
       )}
 
       {/* Error */}
-      {error && <p className="text-red-500 text-sm">Failed to load result</p>}
+      {error && <p className="text-red-500 text-sm">Failed to load ideas</p>}
 
       {/* Idea List */}
       {!loading && !error && (
         <ul className="flex-1 overflow-y-auto space-y-2">
-          {result?.length === 0 ? (
-            <li className="text-gray-500 text-sm">No result yet...</li>
+          {result.length === 0 ? (
+            <li className="text-gray-500 text-sm">No ideas yet...</li>
           ) : (
             result.map((idea) => (
-              <NavLink key={idea._id} to={`/idea/${idea._id}`}>
-                <li
-                 
-                  className="p-2 rounded hover:bg-borderGray cursor-pointer"
+              <li key={idea._id}>
+                <NavLink
+                  to={`/idea/${idea._id}`}
+                  className={({ isActive }) =>
+                    `block p-2 rounded cursor-pointer transition
+     ${isActive ? "bg-borderGray font-medium" : "hover:bg-borderGray"}`
+                  }
                 >
                   {idea.title}
-                </li>
-              </NavLink>
+                </NavLink>
+              </li>
             ))
           )}
         </ul>

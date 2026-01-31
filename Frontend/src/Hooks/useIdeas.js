@@ -11,11 +11,9 @@ export default function useIdeas() {
     setError(null);
     try {
       const data = await apiCall();
-      console.log(data);      
-      setResult(data);
+      setResult((prev) => (data ? data : prev));
     } catch (err) {
-      setError(err);
-      throw err;
+      setError(true);
     } finally {
       setLoading(false);
     }
@@ -25,7 +23,8 @@ export default function useIdeas() {
     getAll: () => execute(() => ideasApi.getAll()),
     getOne: (id) => execute(() => ideasApi.getOne(id)),
     create: (payload) => execute(() => ideasApi.create(payload)),
-    update: ({ id, payload }) => execute(() => ideasApi.update({ id, payload })),
+    update: ({ id, payload }) =>
+      execute(() => ideasApi.update({ id, payload })),
     remove: (id) => execute(() => ideasApi.remove(id)),
   };
 

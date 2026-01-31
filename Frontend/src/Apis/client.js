@@ -1,13 +1,16 @@
 import axios from "axios";
 
+const url = import.meta.env.VITE_API_URL;
+
+
 const api = axios.create({
-  baseURL: "http://localhost:5000",
-  timeout: 10000
+  baseURL: url,
+  timeout: 10000,
 });
 
 api.interceptors.response.use(
   (res) => res.data,
-  (err) => console.error(err),
+  (err) => {console.log(err);Promise.reject(err)},
 );
 
 export default api;

@@ -6,9 +6,9 @@ const addNewIdea = async (req, res) => {
     await ideas.insertOne(req.body);
     const all = await ideas.find();
 
-    res.status(201).json({ msg: "success", ideas: all });
+    res.status(201).json({ msg: "Success", ideas: all });
   } catch (error) {
-    res.status(400).json({ message: "Success", error: error.message });
+    res.status(400).json({ message: "An error occoured", error: error.message });
   }
 };
 
@@ -33,7 +33,7 @@ const deleteAnIdea = async (req, res) => {
       return res.status(404).json({ message: "Not found" });
     }
 
-    res.status(200).json("deleted successfuly");
+    res.status(200).json({message: "Deleted successfuly"});
   } catch (error) {
     console.error(error);
     res.status(400).json({ message: "An error occured", error: error.message });

@@ -12,17 +12,21 @@ export default function Edit_Idea() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
-  const updatedIdea = useMemo(() => {
-    idea?.updated;
-  }, [idea]);
+  const updatedIdea = idea?.updated;
+
+  const updateSuccess = idea?.message === "Idea updated successfully";
+
+  const updateErr = idea?.message === "An error occured";
 
   const isEdited = useMemo(() => {
+    const base = updatedIdea || idea;
+
+    if (!base) return false;
+
     return (
-      (updatedIdea?.title?.trim() || idea?.title?.trim()) !== title.trim() ||
-      updatedIdea?.text?.trim() ||
-      idea?.text?.trim() !== text.trim()
+      base?.title?.trim() !== title.trim() || base?.text?.trim() !== text.trim()
     );
-  }, [idea, title, text]);
+  }, [idea, updatedIdea, title, text]);
 
   const update = () => {
     const updated = {

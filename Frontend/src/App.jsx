@@ -9,7 +9,7 @@ import Edit_Idea from "./Components/UI/Display/editIdea";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/Idea-dump">
       <Routes>
         <Route path="/" element={<Main />}>
           <Route index element={<Display />} />

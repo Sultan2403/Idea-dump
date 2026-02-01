@@ -1,4 +1,4 @@
-const ideas = require("../DB/Models/ideaModel");
+const ideas = require("../DB/Models/ideas.model");
 const mongoose = require("mongoose");
 
 const addNewIdea = async (req, res) => {

@@ -12,9 +12,15 @@ export default function Edit_Idea() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
+  const updatedIdea = useMemo(() => {
+    idea?.updated;
+  }, [idea]);
+
   const isEdited = useMemo(() => {
     return (
-      idea?.title?.trim() !== title.trim() || idea?.text?.trim() !== text.trim()
+      (updatedIdea?.title?.trim() || idea?.title?.trim()) !== title.trim() ||
+      updatedIdea?.text?.trim() ||
+      idea?.text?.trim() !== text.trim()
     );
   }, [idea, title, text]);
 

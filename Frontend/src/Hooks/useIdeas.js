@@ -11,7 +11,7 @@ export default function useIdeas() {
     setError(null);
     try {
       const data = await apiCall();
-      console.log(data);
+    
 
       setResult((prev) => (data ? data : prev));
     } catch (err) {

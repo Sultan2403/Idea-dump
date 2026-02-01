@@ -14,7 +14,6 @@ export default function InputField({ value = "", setValue, props }) {
         variant="standard"
         slotProps={{
           htmlInput: {
-            disableUnderline: true,
             className: "text-lg text-primaryText leading-relaxed",
           },
         }}

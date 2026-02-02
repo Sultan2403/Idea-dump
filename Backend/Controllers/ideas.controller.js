@@ -3,12 +3,13 @@ const mongoose = require("mongoose");
 
 const addNewIdea = async (req, res) => {
   try {
-    await ideas.insertOne(req.body);
-    const all = await ideas.find();
+    const idea = await ideas.insertOne(req.body);
 
-    res.status(201).json({ msg: "Success", ideas: all });
+    res.status(201).json({ message: "Success", idea });
   } catch (error) {
-    res.status(400).json({ message: "An error occoured", error: error.message });
+    res
+      .status(400)
+      .json({ message: "An error occoured", error: error.message });
   }
 };
 
@@ -33,7 +34,7 @@ const deleteAnIdea = async (req, res) => {
       return res.status(404).json({ message: "Not found" });
     }
 
-    res.status(200).json({message: "Deleted successfuly"});
+    res.status(200).json({ message: "Deleted successfuly" });
   } catch (error) {
     console.error(error);
     res.status(400).json({ message: "An error occured", error: error.message });

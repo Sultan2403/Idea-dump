@@ -14,7 +14,7 @@ export default function useIdeas() {
       setResult(data);
     } catch (err) {
       setError(true);
-      console.error(err);
+      console.error(err, err?.response);
     } finally {
       setLoading(false);
     }

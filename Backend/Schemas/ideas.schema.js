@@ -5,6 +5,6 @@ const baseText = Joi.string().trim().min(3);
 const ideaSchema = Joi.object({
   text: baseText.required(),
   title: baseText.required(),
-}).options({ stripUnknown: true });
+}).required().options({ stripUnknown: true });
 
 module.exports = { ideaSchema };

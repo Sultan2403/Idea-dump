@@ -4,6 +4,7 @@ const connectDB = require("./DB/Connections/connectDB");
 const app = express();
 const ideasRouter = require("./Routers/ideas.route");
 const audioRouter = require("./Routers/speech-to-text.route");
+const userRouter = require("./Routers/users.route");
 const { errors } = require("celebrate");
 
 app.use(
@@ -26,6 +27,7 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/ideas", ideasRouter);
+app.use("/users", userRouter);
 app.use("/speech", audioRouter);
 
 app.use(errors()); 

@@ -1,7 +1,6 @@
 const usersCollection = require("../DB/Models/users.model");
 const bcrypt = require("bcryptjs");
-
-console.log(require("crypto").randomBytes(64).toString("hex"));
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const registerUser = async (req, res) => {
   try {
@@ -30,18 +29,16 @@ const loginUser = async (req, res) => {
     }
 
     const isMatch = await bcrypt.compare(password, existingUser.password);
-    console.log(isMatch)
+    console.log(isMatch);
     if (!isMatch) {
       return res
         .status(401)
         .json({ success: false, message: "Invalid password" });
     }
 
-    const token = jwt.sign(
-      { id: existingUser._id, email },
-      process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_EXPIRES_IN || "1h" },
-    );
+    const token = jwt.sign({ id: existingUser._id, email }, JWT_SECRET, {
+      expiresIn: "7d",
+    });
 
     res.json({ success: true, token });
   } catch (error) {

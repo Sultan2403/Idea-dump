@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { ideaSchema } = require("../Schemas/ideas.schema");
+const { ideaSchema, bulkIdeaSchema } = require("../Schemas/ideas.schema");
 const { celebrate } = require("celebrate");
 const userAuthMiddleware = require("../Middlewares/users.auth");
 
@@ -20,7 +20,11 @@ router.post(
   [userAuthMiddleware, celebrate({ body: ideaSchema })],
   addNewIdea,
 );
-router.post("/bulk", userAuthMiddleware, addNewIdeas);
+router.post(
+  "/bulk",
+  [userAuthMiddleware, celebrate({ body: bulkIdeaSchema })],
+  addNewIdeas,
+);
 router.put("/:id", userAuthMiddleware, updateIdea);
 router.delete("/:id", userAuthMiddleware, deleteAnIdea);
 

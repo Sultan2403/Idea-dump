@@ -9,10 +9,15 @@ const ideaSchema = new mongoose.Schema(
     },
     title: {
       type: String,
-      required: true, 
+      required: true,
       trim: true,
     },
-    
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+      index: true
+    },
   },
   {
     timestamps: true,

@@ -7,4 +7,6 @@ const ideaSchema = Joi.object({
   title: baseText.required(),
 }).required().options({ stripUnknown: true });
 
-module.exports = { ideaSchema };
+const bulkIdeaSchema = Joi.array().items(ideaSchema).min(1).required();
+
+module.exports = { ideaSchema, bulkIdeaSchema };

@@ -12,9 +12,10 @@ const {
   deleteAnIdea,
   getOneIdea,
 } = require("../Controllers/ideas.controller");
+const checkObjectId = require("../Validators/validate_Obj_id");
 
-router.get("/", userAuthMiddleware, getUserIdeas);
-router.get("/:id", userAuthMiddleware, getOneIdea);
+router.get("/", [checkObjectId, userAuthMiddleware], getUserIdeas);
+router.get("/:id", [checkObjectId, userAuthMiddleware], getOneIdea);
 router.post(
   "/",
   [userAuthMiddleware, celebrate({ body: ideaSchema })],
@@ -25,7 +26,7 @@ router.post(
   [userAuthMiddleware, celebrate({ body: bulkIdeaSchema })],
   addNewIdeas,
 );
-router.put("/:id", userAuthMiddleware, updateIdea);
-router.delete("/:id", userAuthMiddleware, deleteAnIdea);
+router.put("/:id", [checkObjectId, userAuthMiddleware], updateIdea);
+router.delete("/:id", [checkObjectId, userAuthMiddleware], deleteAnIdea);
 
 module.exports = router;

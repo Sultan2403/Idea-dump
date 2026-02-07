@@ -32,7 +32,7 @@ const deleteAnIdea = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(500).json({ message: "Invalid ID" });
+    return res.status(400).json({ message: "Invalid ID" });
   }
 
   try {
@@ -78,36 +78,20 @@ const getOneIdea = async (req, res) => {
 };
 
 const updateIdea = async (req, res) => {
-  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    return res.status(400).json({ message: "Invalid ID" });
-  }
-
-  if (!req.body) {
-    return res.status(400).json({ message: "Bad request" });
-  }
-
-  const { text, title } = req.body;
-
-  if (!text && !title) {
-    return res.status(400).json({ message: "Bad Request" });
-  }
-
-  const update = {
-    title,
-    text,
-  };
-
   try {
-    const updated = await ideas.findByIdAndUpdate(req.params.id, update, {
-      new: true,
-      runValidators: true,
-    });
+    const updated = await ideas.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user.id },
+      req.body,
+      { new: true, runValidators: true },
+    );
 
     if (!updated) {
       return res.status(404).json({ message: "Idea not found" });
     }
 
-    res.status(200).json({ message: "Idea updated successfully", updated });
+    const { userId, ...data } = updated;
+
+    res.status(200).json({ message: "Idea updated successfully", data });
   } catch (error) {
     console.error("An error occoured", error.message);
     res.status(500).json({ message: "An error occured", error: error.message });
@@ -120,7 +104,7 @@ const addNewIdeas = async (req, res) => {
     res.status(201).json({ message: "Success", inserted });
   } catch (error) {
     console.error(error.message);
-    res.status(500).json({success: false, message: "An error occured" });
+    res.status(500).json({ success: false, message: "An error occured" });
   }
 };
 

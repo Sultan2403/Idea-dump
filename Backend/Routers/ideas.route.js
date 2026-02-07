@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { ideaSchema, bulkIdeaSchema } = require("../Schemas/ideas.schema");
 const { celebrate } = require("celebrate");
-const userAuthMiddleware = require("../Middlewares/users.auth");
+const userAuthMiddleware = require("../Middlewares/Auth/users.auth");
+const checkObjectId = require("../Middlewares/Validators/validate_Obj_id");
 
 const {
   getUserIdeas,
@@ -12,7 +13,7 @@ const {
   deleteAnIdea,
   getOneIdea,
 } = require("../Controllers/ideas.controller");
-const checkObjectId = require("../Validators/validate_Obj_id");
+
 
 router.get("/", [checkObjectId, userAuthMiddleware], getUserIdeas);
 router.get("/:id", [checkObjectId, userAuthMiddleware], getOneIdea);

@@ -14,8 +14,7 @@ const {
   getOneIdea,
 } = require("../Controllers/ideas.controller");
 
-
-router.get("/", [checkObjectId, userAuthMiddleware], getUserIdeas);
+router.get("/", [userAuthMiddleware], getUserIdeas);
 router.get("/:id", [checkObjectId, userAuthMiddleware], getOneIdea);
 router.post(
   "/",

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getToken } from "../Helpers/Auth/tokens";
 
 const url = import.meta.env.VITE_API_URL;
 
@@ -7,12 +8,16 @@ const api = axios.create({
   timeout: url.includes("localhost") ? 10000 : 60000,
 });
 
+api.interceptors.request.use((config) => {
+  const token = getToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 api.interceptors.response.use(
   (res) => res.data,
-  // (err) => {
-  //   console.error(err, err.message)
-
-  // },
 );
 
 export default api;

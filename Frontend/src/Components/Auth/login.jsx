@@ -13,10 +13,7 @@ export default function Login() {
       footer={
         <>
           Don’t have an account?
-          <NavLink
-            href="register"
-            style={{ color: "#6366f1", fontWeight: 500 }}
-          >
+          <NavLink to="/register" style={{ color: "#6366f1", fontWeight: 500 }}>
             Register
           </NavLink>
         </>

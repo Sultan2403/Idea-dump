@@ -19,8 +19,8 @@ function App() {
           <Route path="idea/:ideaId" element={<ViewIdea />} />
           <Route path="idea/edit/:ideaId" element={<Edit_Idea />} />
         </Route>
-        <Route path="login" element={<Login/>}></Route>
-        <Route path="register" element={<Register/>}></Route>
+        <Route path="/login" element={<Login/>}></Route>
+        <Route path="/register" element={<Register/>}></Route>
       </Routes>
     </BrowserRouter>
   );

@@ -1,6 +1,6 @@
 import { TextField, Button, InputAdornment } from "@mui/material";
 import { User, Mail, Lock } from "lucide-react";
-import {NavLink} from 'react-router-dom'
+import { NavLink } from "react-router-dom";
 import AuthLayout from "./layout";
 
 export default function Register() {
@@ -11,7 +11,7 @@ export default function Register() {
       footer={
         <>
           Already have an account?{" "}
-          <NavLink href="login" style={{ color: "#6366f1", fontWeight: 500 }}>
+          <NavLink to="/login" style={{ color: "#6366f1", fontWeight: 500 }}>
             Login
           </NavLink>
         </>
@@ -22,12 +22,14 @@ export default function Register() {
           fullWidth
           label="Username"
           margin="normal"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <User size={18} />
-              </InputAdornment>
-            ),
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <User size={18} />
+                </InputAdornment>
+              ),
+            },
           }}
         />
 
@@ -35,12 +37,14 @@ export default function Register() {
           fullWidth
           label="Email"
           margin="normal"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Mail size={18} />
-              </InputAdornment>
-            ),
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Mail size={18} />
+                </InputAdornment>
+              ),
+            },
           }}
         />
 
@@ -49,12 +53,14 @@ export default function Register() {
           label="Password"
           type="password"
           margin="normal"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Lock size={18} />
-              </InputAdornment>
-            ),
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Lock size={18} />
+                </InputAdornment>
+              ),
+            },
           }}
         />
 
@@ -63,12 +69,14 @@ export default function Register() {
           label="Confirm Password"
           type="password"
           margin="normal"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Lock size={18} />
-              </InputAdornment>
-            ),
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Lock size={18} />
+                </InputAdornment>
+              ),
+            },
           }}
         />
 

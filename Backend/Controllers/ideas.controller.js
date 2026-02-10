@@ -22,7 +22,6 @@ const getUserIdeas = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "An error occured",
-      error: err.message,
     });
   }
 };

@@ -78,7 +78,7 @@ export default function Nav() {
       {/* Idea List */}
       {!loading && !error && (
         <ul className="flex-1 overflow-y-auto space-y-2">
-          {result.length === 0 ? (
+          {result.ideas?.length === 0 ? (
             <li className="text-gray-500 text-sm">No ideas yet...</li>
           ) : (
             result.map((idea) => (

@@ -13,7 +13,7 @@ export default function useIdeas() {
       const data = await apiCall();
       setResult(data);
     } catch (err) {
-      setError(true);
+      setError(err);
       console.error(err, err?.response);
     } finally {
       setLoading(false);

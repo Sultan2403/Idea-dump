@@ -1,20 +1,24 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { PlusCircleIcon, RefreshCwIcon, RefreshCwOff } from "lucide-react";
 import Button from "@mui/material/Button";
 import useIdeas from "../../Hooks/useIdeas";
 import { useEffect } from "react";
 
 export default function Nav() {
-
   const { result, error, loading, getAllIdeas } = useIdeas();
+  const navigate = useNavigate();
 
   const fetchIdeas = () => {
-   getAllIdeas();
+    getAllIdeas();
   };
 
   useEffect(() => {
     fetchIdeas();
   }, []);
+
+  if (error){
+    return navigate("/login")
+  }
 
   return (
     <nav className="bg-cream border-r border-borderGray min-h-screen w-full p-4 flex flex-col">

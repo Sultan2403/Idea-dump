@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TextField, Button, InputAdornment, Alert } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Mail, Lock } from "lucide-react";
 import AuthLayout from "./layout";
 import useAuth from "../../Hooks/useAuth";
 
 export default function Login() {
   const [userData, setUserData] = useState({});
+  const navigate = useNavigate();
 
   const { data, error, loading, login } = useAuth();
 
@@ -18,14 +19,15 @@ export default function Login() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =  (e) => {
     e.preventDefault();
 
     login(userData);
   };
 
   useEffect(() => {
-    if (data) {
+    if (data?.success) {
+      navigate("/");
     }
   }, [data]);
 
@@ -43,7 +45,7 @@ export default function Login() {
       }
     >
       <form onSubmit={handleSubmit}>
-        {error && <Alert severity="error">{error}</Alert>}
+        {/*{/* {error && <Alert severity="error">{Object.keys(error)}</Alert>} */}
 
         <TextField
           fullWidth

@@ -22,8 +22,8 @@ export default function useAuth() {
   };
 
   const methods = {
-    login: (payload) => execute(authApi.login(payload)),
-    register: (payload) => execute(authApi.register(payload)),
+    login: (payload) => execute(() => authApi.login(payload)),
+    register: (payload) => execute(() => authApi.register(payload)),
   };
 
   return { data, loading, error, ...methods };

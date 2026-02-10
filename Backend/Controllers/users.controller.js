@@ -40,7 +40,7 @@ const loginUser = async (req, res) => {
 
     if (!user) {
       return res
-        .status(404)
+        .status(401)
         .json({ success: false, message: "User not found" });
     }
 

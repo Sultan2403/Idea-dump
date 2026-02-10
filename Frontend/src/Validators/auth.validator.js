@@ -7,14 +7,14 @@ export function validateUserLogin(user) {
   }
 
   // Email
-  if (!user.email || user.email.trim() === "") {
+  if (!user.email || user.email?.trim() === "") {
     errors.email = "Email is required";
   } else if (!/\S+@\S+\.\S+/.test(user.email)) {
     errors.email = "Email must be a valid email address";
   }
 
   // Password
-  if (!user.password || user.password.trim() === "") {
+  if (!user.password || user.password?.trim() === "") {
     errors.password = "Password is required";
   }
 
@@ -32,12 +32,12 @@ export function validateUserRegister(user) {
   // Name
   if (!user.name || user.name.trim() === "") {
     errors.name = "Name is required";
-  } else if (user.name.length < 3) {
+  } else if (user.name?.length < 3) {
     errors.name = "Name must be at least 3 characters";
   }
 
   // Email
-  if (!user.email || user.email.trim() === "") {
+  if (!user.email || user.email?.trim() === "") {
     errors.email = "Email is required";
   } else if (!/\S+@\S+\.\S+/.test(user.email)) {
     errors.email = "Email must be a valid email address";
@@ -46,7 +46,7 @@ export function validateUserRegister(user) {
   // Password
   if (!user.password) {
     errors.password = "Password is required";
-  } else if (user.password.length < 8) {
+  } else if (user.password?.length < 8) {
     errors.password = "Password must be at least 8 characters";
   } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])/.test(user.password)) {
     errors.password =

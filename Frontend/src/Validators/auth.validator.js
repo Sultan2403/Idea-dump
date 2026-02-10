@@ -1,3 +1,5 @@
+import isEmail from "validator/lib/isEmail";
+
 export function validateUserLogin(user) {
   const errors = {};
 
@@ -7,10 +9,15 @@ export function validateUserLogin(user) {
   }
 
   // Email
-  if (!user.email || user.email?.trim() === "") {
-    errors.email = "Email is required";
-  } else if (!/\S+@\S+\.\S+/.test(user.email)) {
-    errors.email = "Email must be a valid email address";
+  if (!user.email) {
+    errors.email = "Please enter a valid email address";
+  } else if (
+    !isEmail(user.email, {
+      allow_utf8_local_part: false,
+      require_tld: true,
+    })
+  ) {
+    errors.email = "Please enter a valid email address";
   }
 
   // Password
@@ -37,10 +44,15 @@ export function validateUserRegister(user) {
   }
 
   // Email
-  if (!user.email || user.email?.trim() === "") {
-    errors.email = "Email is required";
-  } else if (!/\S+@\S+\.\S+/.test(user.email)) {
-    errors.email = "Email must be a valid email address";
+  if (!user.email) {
+    errors.email = "Please enter a valid email address";
+  } else if (
+    !isEmail(user.email, {
+      allow_utf8_local_part: false,
+      require_tld: true,
+    })
+  ) {
+    errors.email = "Please enter a valid email address";
   }
 
   // Password

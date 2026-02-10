@@ -3,7 +3,7 @@ import { PlusCircleIcon, RefreshCwIcon, RefreshCwOff } from "lucide-react";
 import Button from "@mui/material/Button";
 import useIdeas from "../../Hooks/useIdeas";
 import { useEffect } from "react";
-import { getToken } from "../../Helpers/Auth/tokens";
+
 
 export default function Nav() {
   const { result, error, loading, getAllIdeas } = useIdeas();
@@ -15,10 +15,6 @@ export default function Nav() {
   useEffect(() => {
     fetchIdeas();
   }, []);
-
-  if (!getToken()) {
-    return <Navigate to="/login" replace />;
-  }
 
   if (error?.status === 401) {
     return <Navigate to="/login" replace />;

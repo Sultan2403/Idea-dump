@@ -1,8 +1,12 @@
 import Nav from "../Navigation/nav";
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
+import { getToken } from "../../Helpers/Auth/tokens";
 
 export default function Main() {
 
+    if (!getToken()) {
+      return <Navigate to="/login" replace />;
+    } 
   
   return (
     <div className="flex h-screen w-full">

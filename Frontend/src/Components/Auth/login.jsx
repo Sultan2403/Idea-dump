@@ -5,6 +5,7 @@ import { Mail, Lock } from "lucide-react";
 import AuthLayout from "./layout";
 import useAuth from "../../Hooks/useAuth";
 import { validateUserLogin } from "../../Validators/auth.validator";
+import { setToken } from "../../Helpers/Auth/tokens";
 
 export default function Login() {
 
@@ -47,6 +48,8 @@ export default function Login() {
 
   useEffect(() => {
     if (data?.success) {
+      setToken(data.token)
+      console.log(data)
       navigate("/");
     }
   }, [data]);

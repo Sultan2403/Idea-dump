@@ -1,9 +1,48 @@
-import { TextField, Button, InputAdornment } from "@mui/material";
+import { useState, useEffect } from "react";
+import { TextField, Button, InputAdornment, Alert } from "@mui/material";
 import { User, Mail, Lock } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import AuthLayout from "./layout";
+import useAuth from "../../Hooks/useAuth";
+import { validateUserRegister } from "../../Validators/auth.validator";
 
 export default function Register() {
+  const [userData, setUserData] = useState({});
+  const [fieldErrors, setFieldErrors] = useState({});
+  const navigate = useNavigate();
+
+  const { data, error, loading, register } = useAuth();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prev) => ({ ...prev, [name]: value }));
+ 
+    // clear field error as user types
+    if (fieldErrors[name]) {
+      setFieldErrors((prev) => ({ ...prev, [name]: null }));
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const errors = validateUserRegister(userData);
+    setFieldErrors(errors);
+
+    if (Object.keys(errors).length > 0) return;
+
+    register(userData);
+  };
+
+  useEffect(() => {
+    console.log(data)
+    if (data?.success) {
+      setToken(data?.token)
+      console.log(data?.token)
+      navigate("/");
+    }
+  }, [data, navigate]);
+
   return (
     <AuthLayout
       title="Create Account"
@@ -17,11 +56,23 @@ export default function Register() {
         </>
       }
     >
-      <form>
+      <form onSubmit={handleSubmit} noValidate>
+        {/* Form-level backend error */}
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error.message || "Registration failed. Please try again."}
+          </Alert>
+        )}
+
         <TextField
           fullWidth
           label="Username"
+          name="name"
+          value={userData.name || ""}
+          onChange={handleChange}
           margin="normal"
+          error={Boolean(fieldErrors.name)}
+          helperText={fieldErrors.name}
           slotProps={{
             input: {
               startAdornment: (
@@ -36,7 +87,12 @@ export default function Register() {
         <TextField
           fullWidth
           label="Email"
+          name="email"
+          value={userData.email || ""}
+          onChange={handleChange}
           margin="normal"
+          error={Boolean(fieldErrors.email)}
+          helperText={fieldErrors.email}
           slotProps={{
             input: {
               startAdornment: (
@@ -51,8 +107,13 @@ export default function Register() {
         <TextField
           fullWidth
           label="Password"
+          name="password"
           type="password"
+          value={userData.password || ""}
+          onChange={handleChange}
           margin="normal"
+          error={Boolean(fieldErrors.password)}
+          helperText={fieldErrors.password}
           slotProps={{
             input: {
               startAdornment: (
@@ -67,8 +128,13 @@ export default function Register() {
         <TextField
           fullWidth
           label="Confirm Password"
+          name="confirmPassword"
           type="password"
+          value={userData.confirmPassword || ""}
+          onChange={handleChange}
           margin="normal"
+          error={Boolean(fieldErrors.confirmPassword)}
+          helperText={fieldErrors.confirmPassword}
           slotProps={{
             input: {
               startAdornment: (
@@ -83,10 +149,13 @@ export default function Register() {
         <Button
           fullWidth
           size="large"
+          type="submit"
           variant="contained"
           sx={{ mt: 3, py: 1.2 }}
+          disabled={loading}
+          loading={loading}
         >
-          Register
+          {loading ? "Creating account..." : "Register"}
         </Button>
       </form>
     </AuthLayout>

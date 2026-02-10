@@ -1,5 +1,6 @@
 const usersCollection = require("../DB/Models/users.model");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
 const hashingRounds = 10;
 
@@ -36,7 +37,7 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { password, email } = req.body;
-    const user = await usersCollection.findOne({ email });
+    const user = await usersCollection.findOne({ email }).select("+password");
 
     if (!user) {
       return res
@@ -45,11 +46,11 @@ const loginUser = async (req, res) => {
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log(isMatch);
+
     if (!isMatch) {
       return res
         .status(401)
-        .json({ success: false, message: "Invalid password" });
+        .json({ success: false, message: "Invalid credentials" });
     }
 
     const token = jwt.sign({ id: user._id, email }, JWT_SECRET, {
@@ -58,7 +59,7 @@ const loginUser = async (req, res) => {
 
     res.json({ success: true, token });
   } catch (error) {
-    console.error(err, err.message);
+    console.error(error, error.message);
     return res.status(401).json({ success: false, message: "Unauthorized" });
   }
 };

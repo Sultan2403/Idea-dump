@@ -1,12 +1,12 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, Navigate } from "react-router-dom";
 import { PlusCircleIcon, RefreshCwIcon, RefreshCwOff } from "lucide-react";
 import Button from "@mui/material/Button";
 import useIdeas from "../../Hooks/useIdeas";
 import { useEffect } from "react";
+import { getToken } from "../../Helpers/Auth/tokens";
 
 export default function Nav() {
   const { result, error, loading, getAllIdeas } = useIdeas();
-  const navigate = useNavigate();
 
   const fetchIdeas = () => {
     getAllIdeas();
@@ -16,8 +16,12 @@ export default function Nav() {
     fetchIdeas();
   }, []);
 
-  if (error){
-    return navigate("/login")
+  if (!getToken()) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (error?.status === 401) {
+    return <Navigate to="/login" replace />;
   }
 
   return (

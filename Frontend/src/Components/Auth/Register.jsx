@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { TextField, Button, InputAdornment, Alert } from "@mui/material";
 import { User, Mail, Lock } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
-import AuthLayout from "./layout";
+import AuthLayout from "./Layout";
 import useAuth from "../../Hooks/useAuth";
 import { validateUserRegister } from "../../Validators/auth.validator";
 

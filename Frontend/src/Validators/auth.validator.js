@@ -37,10 +37,10 @@ export function validateUserRegister(user) {
   }
 
   // Name
-  if (!user.name || user.name.trim() === "") {
-    errors.name = "Name is required";
-  } else if (user.name?.length < 3) {
-    errors.name = "Name must be at least 3 characters";
+  if (!user.username || user.username.trim() === "") {
+    errors.username = "Name is required";
+  } else if (user.username?.length < 3) {
+    errors.username = "Name must be at least 3 characters";
   }
 
   // Email

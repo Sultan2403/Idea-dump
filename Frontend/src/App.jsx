@@ -6,8 +6,8 @@ import Display from "./Components/UI/Display/display";
 import VoiceTest from "./Utils/audioRecorder";
 import ViewIdea from "./Components/UI/Display/viewIdea";
 import Edit_Idea from "./Components/UI/Display/editIdea";
-import Login from "./Components/Auth/login";
-import Register from "./Components/Auth/register";
+import Login from "./Components/Auth/Login";
+import Register from "./Components/Auth/Register";
 
 function App() {
   return (

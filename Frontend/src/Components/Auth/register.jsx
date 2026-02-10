@@ -35,10 +35,10 @@ export default function Register() {
   };
 
   useEffect(() => {
-    console.log(data)
+    (data)
     if (data?.success) {
       setToken(data?.token)
-      console.log(data?.token)
+      (data?.token)
       navigate("/");
     }
   }, [data, navigate]);
@@ -67,12 +67,12 @@ export default function Register() {
         <TextField
           fullWidth
           label="Username"
-          name="name"
-          value={userData.name || ""}
+          name="username"
+          value={userData.username || ""}
           onChange={handleChange}
           margin="normal"
-          error={Boolean(fieldErrors.name)}
-          helperText={fieldErrors.name}
+          error={Boolean(fieldErrors.username)}
+          helperText={fieldErrors.username}
           slotProps={{
             input: {
               startAdornment: (

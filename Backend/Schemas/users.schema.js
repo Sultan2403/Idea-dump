@@ -1,14 +1,14 @@
 const { Joi } = require("celebrate");
 
-const name = Joi.string()
+const username = Joi.string()
   .trim()
   .min(3)
   .max(100)
   .pattern(/^[\p{L}\p{M}\d'’\.\-\s]+$/u)
   .messages({
-    "string.empty": "Name is required",
-    "string.min": "Name must be at least 3 characters",
-    "string.pattern.base": "Name contains invalid characters",
+    "string.empty": "Username is required",
+    "string.min": "Username must be at least 3 characters",
+    "string.pattern.base": "Username contains invalid characters",
   })
   .required();
 
@@ -36,7 +36,7 @@ const password = Joi.string()
   .required();
 
 const registerSchema = Joi.object({
-  name: name,
+  username: username,
   email: email,
   password: password,
   confirmPassword: Joi.any().valid(Joi.ref("password")).required().messages({

@@ -2,11 +2,11 @@ import { NavLink, Navigate } from "react-router-dom";
 import { PlusCircleIcon, RefreshCwIcon, RefreshCwOff } from "lucide-react";
 import Button from "@mui/material/Button";
 import useIdeas from "../../Hooks/useIdeas";
-import { useEffect } from "react";
-
+import { useEffect, useMemo } from "react";
 
 export default function Nav() {
   const { result, error, loading, getAllIdeas } = useIdeas();
+
 
   const fetchIdeas = () => {
     getAllIdeas();
@@ -78,10 +78,10 @@ export default function Nav() {
       {/* Idea List */}
       {!loading && !error && (
         <ul className="flex-1 overflow-y-auto space-y-2">
-          {result.ideas?.length === 0 ? (
+          {result?.ideas?.length === 0 ? (
             <li className="text-gray-500 text-sm">No ideas yet...</li>
           ) : (
-            result.map((idea) => (
+            result?.ideas?.map((idea) => (
               <li key={idea._id}>
                 <NavLink
                   to={`/idea/${idea._id}`}

@@ -43,7 +43,7 @@ const deleteAnIdea = async (req, res) => {
         .json({ success: false, message: "Idea not found" });
     }
 
-    res.status(200).json({ success: true, message: "Deleted successfully" });
+    res.status(204).json({ success: true, message: "Deleted successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -55,7 +55,7 @@ const deleteAnIdea = async (req, res) => {
 };
 
 const getOneIdea = async (req, res) => {
-  const { userId } = req.user;
+  const  userId  = req.user.id;
   const ideaId = req.params.id;
 
   if (!mongoose.Types.ObjectId.isValid(ideaId)) {

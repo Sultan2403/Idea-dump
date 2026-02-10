@@ -49,7 +49,6 @@ export default function Login() {
   useEffect(() => {
     if (data?.success) {
       setToken(data.token)
-      console.log(data)
       navigate("/");
     }
   }, [data]);

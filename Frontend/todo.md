@@ -1,0 +1,1 @@
+Next challenge is to update view idea comp to access idea cleanly and also smartly determine status code

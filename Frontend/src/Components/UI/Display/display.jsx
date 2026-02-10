@@ -4,6 +4,7 @@ import useIdeas from "../../../Hooks/useIdeas";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomModal from "../Modal/customModal";
+import getUserData from "../../../Helpers/Utils/getUserData";
 
 export default function Display() {
   const [text, setText] = useState("");
@@ -14,6 +15,8 @@ export default function Display() {
   const navigate = useNavigate();
 
   const { result, loading, error, createIdea } = useIdeas();
+
+  const userData = getUserData();
 
   const saveIdea = () => {
     const idea = { text, title };
@@ -49,6 +52,9 @@ export default function Display() {
 
   return (
     <div className="px-10 py-8 bg-offwhite min-h-[400px] rounded-lg shadow-soft">
+      <h2 className="text-2xl font-serif font-medium text-softBrown mb-6">
+        Welcome back, {userData.username || "Guest"}
+      </h2>
       <h2 className="text-2xl font-serif font-medium text-softBrown mb-6">
         Never lose a thought again
       </h2>

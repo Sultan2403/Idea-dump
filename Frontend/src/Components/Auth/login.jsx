@@ -1,10 +1,33 @@
-import { TextField, Button, InputAdornment } from "@mui/material";
+import { useState } from "react";
+import { TextField, Button, InputAdornment, Alert } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { Mail, Lock } from "lucide-react";
 import AuthLayout from "./layout";
+import useAuth from "../../Hooks/useAuth";
 
 export default function Login() {
-  const handleSubmit = () => {};
+  const [userData, setUserData] = useState({});
+
+  const { data, error, loading, login } = useAuth();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    login(userData);
+  };
+
+  useEffect(() => {
+    if (data) {
+    }
+  }, [data]);
 
   return (
     <AuthLayout
@@ -19,10 +42,15 @@ export default function Login() {
         </>
       }
     >
-      <form>
+      <form onSubmit={handleSubmit}>
+        {error && <Alert severity="error">{error}</Alert>}
+
         <TextField
           fullWidth
           label="Email"
+          name="email"
+          value={userData.email}
+          onChange={handleChange}
           margin="normal"
           slotProps={{
             htmlInput: {
@@ -38,7 +66,10 @@ export default function Login() {
         <TextField
           fullWidth
           label="Password"
+          name="password"
           type="password"
+          value={userData.password}
+          onChange={handleChange}
           margin="normal"
           slotProps={{
             htmlInput: {
@@ -54,10 +85,12 @@ export default function Login() {
         <Button
           fullWidth
           size="large"
+          type="submit"
           variant="contained"
           sx={{ mt: 3, py: 1.2 }}
+          disabled={loading}
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </Button>
       </form>
     </AuthLayout>

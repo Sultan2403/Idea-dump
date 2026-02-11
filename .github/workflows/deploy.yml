@@ -31,8 +31,8 @@ jobs:
         with:
           node-version: 20 # matches your local Node
 
-      - name: Install dependencies & fix vulnerabilities
-        run: npm install && npm audit fix
+      - name: Install dependencies & log and fix vulnerabilities
+        run: npm install && npm audit && npm audit fix
         working-directory: Frontend
 
       - name: Build app

@@ -4,49 +4,49 @@ name: Deploy Vite + React to GitHub Pages
 on:
   push:
     branches:
-      - main        # runs on pushes to main
-  workflow_dispatch:  # allows manual trigger from GitHub UI
+      - main # runs on pushes to main
+  workflow_dispatch: # allows manual trigger from GitHub UI
 
 # --- Permissions for this workflow ---
 permissions:
-  contents: read  # read repo files
-  pages: write    # deploy to GitHub Pages
+  contents: read # read repo files
+  pages: write # deploy to GitHub Pages
   id-token: write # authentication for Pages deployment
 
 # --- Concurrency prevents overlapping deploys ---
 concurrency:
   group: "pages"
-  cancel-in-progress: true  # cancels old runs if new push happens
+  cancel-in-progress: true # cancels old runs if new push happens
 
 # --- Job 1: Build the app ---
 jobs:
   build:
-    runs-on: ubuntu-latest  # use Ubuntu virtual machine
+    runs-on: ubuntu-latest # use Ubuntu virtual machine
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4  # grabs your code from GitHub
+        uses: actions/checkout@v4 # grabs your code from GitHub
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20  # matches your local Node
+          node-version: 20 # matches your local Node
 
-      - name: Install dependencies
-        run: npm install  # installs packages in package.json
-        working-directory: Frontend  # <--- HERE
+      - name: Install dependencies & fix vulnerabilities
+        run: npm install && npm audit fix
+        working-directory: Frontend
 
       - name: Build app
-        run: npm run build  # runs Vite build, outputs to dist/
-        working-directory: Frontend  # <--- HERE
+        run: npm run build # runs Vite build, outputs to dist/
+        working-directory: Frontend # <--- HERE
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: Frontend/dist  # tells GitHub: this is what we want to deploy
+          path: Frontend/dist # tells GitHub: this is what we want to deploy
 
-# --- Job 2: Deploy to GitHub Pages ---
+  # --- Job 2: Deploy to GitHub Pages ---
   deploy:
-    needs: build  # must wait for build to finish
+    needs: build # must wait for build to finish
     runs-on: ubuntu-latest
     environment:
       name: github-pages

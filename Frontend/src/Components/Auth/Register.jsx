@@ -41,7 +41,7 @@ export default function Register() {
       (data?.token)
       navigate("/");
     }
-  }, [data, navigate]);
+  }, [data]);
 
   return (
     <AuthLayout
@@ -60,7 +60,7 @@ export default function Register() {
         {/* Form-level backend error */}
         {error && (
           <Alert severity="error" sx={{ mb: 2 }}>
-            {error.message || "Registration failed. Please try again."}
+            {error.message || "Registration failed. Please try again later."}
           </Alert>
         )}
 

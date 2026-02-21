@@ -1,11 +1,18 @@
+// Main
 const express = require("express");
-const cors = require("cors");
-const connectDB = require("./DB/Connections/connectDB");
 const app = express();
+const connectDB = require("./DB/Connections/connectDB");
+
+// Routers
 const ideasRouter = require("./Routers/ideas.route");
 const audioRouter = require("./Routers/speech-to-text.route");
 const userRouter = require("./Routers/users.route");
+
+// Middlewares
 const { errors } = require("celebrate");
+const cors = require("cors");
+
+connectDB();
 
 app.use(
   cors({
@@ -14,7 +21,7 @@ app.use(
 );
 app.use(express.json());
 
-connectDB();
+
 
 app.get("/", (req, res) => {
   res
@@ -23,12 +30,14 @@ app.get("/", (req, res) => {
 });
 
 app.get("/health", (req, res) => {
-  res.status(200).json({ message: "Server says heyyy :)" });
+  res.status(200).json({success: true, message: "Server says heyyy :)" });
 });
 
+// Routes
 app.use("/ideas", ideasRouter);
 app.use("/users", userRouter);
 app.use("/speech", audioRouter);
 
 app.use(errors()); 
+
 module.exports = app;

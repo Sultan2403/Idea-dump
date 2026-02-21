@@ -1,10 +1,10 @@
 import Nav from "../Navigation/nav";
 import { Outlet, Navigate } from "react-router-dom";
-import { getToken } from "../../Helpers/Auth/tokens";
+import { getAccessToken } from "../../Helpers/Auth/tokens";
 
 export default function Main() {
 
-    if (!getToken()) {
+    if (!getAccessToken()) {
       return <Navigate to="/login" replace />;
     } 
   

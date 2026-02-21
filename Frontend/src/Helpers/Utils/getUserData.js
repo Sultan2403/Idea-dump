@@ -1,8 +1,8 @@
 import { jwtDecode } from "jwt-decode";
-import { getToken } from "../Auth/tokens";
+import { getAccessToken } from "../Auth/tokens";
 
 export default function getUserData() {
-  const token = getToken();
+  const token = getAccessToken();
   if (!token) return null;
 
   try {

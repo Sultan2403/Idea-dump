@@ -32,7 +32,7 @@ jobs:
           node-version: 20 # matches your local Node
 
       - name: Install production dependencies
-        run: npm install --force --omit=dev # install only prod deps, ignore dev warnings
+        run: npm install --force # install only prod deps, ignore dev warnings
         working-directory: Frontend
 
       - name: Install dependencies & log and fix vulnerabilities

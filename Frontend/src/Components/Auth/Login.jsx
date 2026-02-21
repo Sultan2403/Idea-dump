@@ -5,10 +5,9 @@ import { Mail, Lock } from "lucide-react";
 import AuthLayout from "./Layout";
 import useAuth from "../../Hooks/useAuth";
 import { validateUserLogin } from "../../Validators/auth.validator";
-import { setToken } from "../../Helpers/Auth/tokens";
+import { setRefreshToken, setAccessToken } from "../../Helpers/Auth/tokens";
 
 export default function Login() {
-
   // State init
 
   const [userData, setUserData] = useState({});
@@ -48,7 +47,8 @@ export default function Login() {
 
   useEffect(() => {
     if (data?.success) {
-      setToken(data?.token)
+      setRefreshToken(data?.tokens?.refreshToken);
+      setAccessToken(data?.tokens?.accessToken);
       navigate("/");
     }
   }, [data]);
@@ -70,7 +70,8 @@ export default function Login() {
         {/* FORM-LEVEL ERROR (backend / unexpected) */}
         {error && !fieldErrors.email && !fieldErrors.password && (
           <Alert severity="error" sx={{ mb: 2 }}>
-            {error?.response?.data?.message || "Login failed. Please try again."}
+            {error?.response?.data?.message ||
+              "Login failed. Please try again."}
           </Alert>
         )}
 

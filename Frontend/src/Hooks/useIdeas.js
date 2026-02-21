@@ -12,10 +12,8 @@ export default function useIdeas() {
     try {
       const data = await apiCall();
       setResult(data);
-      console.log(data)
     } catch (err) {
       setError(err);
-      console.error(err, err?.response);
     } finally {
       setLoading(false);
     }

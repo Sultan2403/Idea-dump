@@ -54,4 +54,12 @@ const loginSchema = Joi.object({
   .required()
   .options({ stripUnknown: true });
 
-module.exports = { registerSchema, loginSchema };
+const Joi = require("joi");
+
+const refreshTokenSchema = Joi.object({
+  refreshToken: Joi.string().required(),
+})
+  .required()
+  .options({ stripUnknown: true });
+
+module.exports = { registerSchema, loginSchema, refreshTokenSchema };

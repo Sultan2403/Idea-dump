@@ -36,7 +36,7 @@ jobs:
         working-directory: Frontend
 
       - name: Install dependencies & log and fix vulnerabilities
-        run: npm audit && npm audit fix
+        run: npm audit && npm audit fix --omit=dev # check for vulnerabilities and fix if possible, ignore dev deps
         working-directory: Frontend
 
       - name: Build app

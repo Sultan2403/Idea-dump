@@ -2,11 +2,22 @@ import { NavLink, Navigate } from "react-router-dom";
 import { PlusCircleIcon, RefreshCwIcon, RefreshCwOff } from "lucide-react";
 import Button from "@mui/material/Button";
 import useIdeas from "../../Hooks/useIdeas";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
+import useAuth from "../../Hooks/useAuth";
+import {
+  getRefreshToken,
+  setAccessToken,
+  setRefreshToken,
+} from "../../Helpers/Auth/tokens";
 
 export default function Nav() {
   const { result, error, loading, getAllIdeas } = useIdeas();
-
+  const {
+    data: authData,
+    loading: authLoading,
+    error: authError,
+    refresh,
+  } = useAuth();
 
   const fetchIdeas = () => {
     getAllIdeas();
@@ -16,9 +27,18 @@ export default function Nav() {
     fetchIdeas();
   }, []);
 
-  if (error?.status === 401) {
-    return <Navigate to="/login" replace />;
-  }
+  useEffect(() => {
+    if (authData?.tokens) {
+      setAccessToken(authData.tokens.accessToken);
+      setRefreshToken(authData.tokens.refreshToken);
+    }
+  }, [authData]);
+
+  useEffect(() => {
+    if (error?.status === 401 || error?.status === 403) {
+      refresh(getRefreshToken());
+    }
+  }, [error]);
 
   return (
     <nav className="bg-cream border-r border-borderGray min-h-screen w-full p-4 flex flex-col">
@@ -33,7 +53,7 @@ export default function Nav() {
           fullWidth
           startIcon={<RefreshCwIcon />}
           onClick={fetchIdeas}
-          loading={loading}
+          loading={loading || authLoading}
           variant="contained"
           className="!bg-softBrown text-white hover:bg-softBrown/90"
         >
@@ -68,7 +88,7 @@ export default function Nav() {
       )}
 
       {/* Error */}
-      {error && (
+      {error && authError && (
         <p className="text-red-500 text-sm">
           Failed to load ideas. <br /> Check your internet connection and try
           again.
@@ -76,7 +96,7 @@ export default function Nav() {
       )}
 
       {/* Idea List */}
-      {!loading && !error && (
+      {!loading && !error && !authError && !authLoading && (
         <ul className="flex-1 overflow-y-auto space-y-2">
           {result?.ideas?.length === 0 ? (
             <li className="text-gray-500 text-sm">No ideas yet...</li>

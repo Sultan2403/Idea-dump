@@ -15,6 +15,7 @@ export default function useAuth() {
       setData(response);
     } catch (err) {
       setError(err);
+            console.error(err, err?.response, err?.data);
     } finally {
       setLoading(false);
     }
@@ -23,6 +24,7 @@ export default function useAuth() {
   const methods = {
     login: (payload) => execute(() => authApi.login(payload)),
     register: (payload) => execute(() => authApi.register(payload)),
+    refresh: (payload) => execute(() => authApi.refresh({refreshToken: payload})),
   };
 
   return { data, loading, error, ...methods };

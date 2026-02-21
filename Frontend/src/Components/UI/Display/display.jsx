@@ -4,7 +4,7 @@ import useIdeas from "../../../Hooks/useIdeas";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomModal from "../Modal/customModal";
-import getUserData from "../../../Helpers/Utils/getUserData";
+import getUserData from "../../../Helpers/Utils/jwt.util";
 
 export default function Display() {
   const [text, setText] = useState("");

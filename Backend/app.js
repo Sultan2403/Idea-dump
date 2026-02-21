@@ -6,7 +6,7 @@ const connectDB = require("./DB/Connections/connectDB");
 // Routers
 const ideasRouter = require("./Routers/ideas.route");
 const audioRouter = require("./Routers/speech-to-text.route");
-const userRouter = require("./Routers/users.route");
+const authRouter = require("./Routers/auth.route");
 
 // Middlewares
 const { errors } = require("celebrate");
@@ -35,7 +35,7 @@ app.get("/health", (req, res) => {
 
 // Routes
 app.use("/ideas", ideasRouter);
-app.use("/users", userRouter);
+app.use("/auth", authRouter);
 app.use("/speech", audioRouter);
 
 app.use(errors()); 

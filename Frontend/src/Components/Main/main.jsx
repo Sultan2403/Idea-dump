@@ -1,13 +1,13 @@
 import Nav from "../Navigation/nav";
 import { Outlet, Navigate } from "react-router-dom";
-import { getAccessToken } from "../../Helpers/Auth/tokens";
+import { getAccessToken, getRefreshToken } from "../../Helpers/Auth/tokens";
+import { validateAccessToken } from "../../Helpers/Utils/jwt.util";
 
 export default function Main() {
+  if (!validateAccessToken()) {
+    return <Navigate to="/login" replace />;
+  }
 
-    if (!getAccessToken()) {
-      return <Navigate to="/login" replace />;
-    } 
-  
   return (
     <div className="flex h-screen w-full">
       <div className="w-[20%] h-full overflow-y-auto">

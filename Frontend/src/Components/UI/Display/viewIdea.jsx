@@ -1,29 +1,31 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useParams, NavLink } from "react-router-dom";
 import Button from "@mui/material/Button";
 import useIdeas from "../../../Hooks/useIdeas";
 import truncateText from "../../../Utils/truncateText";
+import CustomModal from "../Modal/customModal"
 
 export default function ViewIdea() {
   const { ideaId } = useParams();
   const { result, loading, error, getOneIdea, removeIdea } = useIdeas();
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const idea = result?.idea;
-
   const truncatedText = truncateText(idea?.text);
-
-  const deleteIdea = () => {
-    removeIdea(ideaId);
-  };
 
   useEffect(() => {
     getOneIdea(ideaId);
   }, [ideaId]);
 
+  const deleteIdeaConfirmed = () => {
+    removeIdea(ideaId);
+    setShowDeleteConfirm(false);
+  };
+
   if (loading) return <div className="p-4 text-gray-500">Loading...</div>;
 
   if (result?.message === "Deleted successfuly")
-    return <div>Idea deleted successfully.</div>;
+    return <div className="p-4 text-gray-500">Idea deleted successfully.</div>;
 
   if (error)
     return (
@@ -40,9 +42,39 @@ export default function ViewIdea() {
   if (!idea) return <div className="p-4 text-gray-500">No idea found</div>;
 
   return (
-    <div className="h-full bg-cream flex justify-center">
+    <div className="h-full bg-cream flex justify-center relative">
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <CustomModal
+          open={showDeleteConfirm}
+          onClose={() => setShowDeleteConfirm(false)}
+        >
+          <h2 className="text-xl font-semibold text-primaryText">
+            Delete Idea?
+          </h2>
+          <p className="text-secondaryText">
+            Are you sure you want to delete this idea? This action cannot be
+            undone.
+          </p>
+          <div className="flex justify-end gap-3 pt-4">
+            <Button
+              className="!bg-borderGray !text-primaryText px-4 py-2 rounded font-sans"
+              onClick={() => setShowDeleteConfirm(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              className="!bg-red-600 !text-white px-4 py-2 rounded font-sans"
+              onClick={deleteIdeaConfirmed}
+            >
+              Delete
+            </Button>
+          </div>
+        </CustomModal>
+      )}
+
+      {/* Main content card */}
       <div className="w-full max-w-3xl px-6 py-10">
-        {/* Card */}
         <div className="bg-white rounded-2xl shadow-sm border border-borderGray p-8 flex flex-col gap-8">
           {/* Title */}
           <header className="space-y-3">
@@ -75,7 +107,7 @@ export default function ViewIdea() {
 
             <Button
               className="!bg-red-600 !text-white px-5 py-2 rounded-lg font-sans"
-              onClick={deleteIdea}
+              onClick={() => setShowDeleteConfirm(true)}
               disabled={loading}
             >
               Delete

@@ -8,9 +8,9 @@ export default function ViewIdea() {
   const { ideaId } = useParams();
   const { result, loading, error, getOneIdea, removeIdea } = useIdeas();
 
-  const idea = result?.idea
+  const idea = result?.idea;
 
-  const truncatedText = useMemo(() => truncateText(idea?.text), [idea]);
+  const truncatedText = truncateText(idea?.text);
 
   const deleteIdea = () => {
     removeIdea(ideaId);
@@ -22,7 +22,7 @@ export default function ViewIdea() {
 
   if (loading) return <div className="p-4 text-gray-500">Loading...</div>;
 
-  if (idea?.message === "Deleted successfuly")
+  if (result?.message === "Deleted successfuly")
     return <div>Idea deleted successfully.</div>;
 
   if (error)
@@ -40,48 +40,48 @@ export default function ViewIdea() {
   if (!idea) return <div className="p-4 text-gray-500">No idea found</div>;
 
   return (
-    <div className="h-full bg-cream">
-      <div className="p-6 flex flex-col space-y-6 max-w-3xl">
-        {/* Title */}
-        <h1 className="text-2xl font-bold text-primaryText border-b-borderGray ">
-          {idea?.title}
-        </h1>
+    <div className="h-full bg-cream flex justify-center">
+      <div className="w-full max-w-3xl px-6 py-10">
+        {/* Card */}
+        <div className="bg-white rounded-2xl shadow-sm border border-borderGray p-8 flex flex-col gap-8">
+          {/* Title */}
+          <header className="space-y-3">
+            <h1 className="text-3xl font-serif font-semibold text-primaryText">
+              {idea.title}
+            </h1>
+            <div className="h-px bg-borderGray" />
+          </header>
 
-        {/* Preview Text */}
-        <p className="text-secondaryText whitespace-pre-wrap">
-          Preview: <br /> {truncatedText}
-        </p>
+          {/* Preview */}
+          <section className="space-y-3">
+            <span className="text-xs uppercase tracking-wider text-secondaryText">
+              Preview
+            </span>
+            <p className="text-primaryText whitespace-pre-wrap leading-7">
+              {truncatedText}
+            </p>
+          </section>
 
-        {/* Edit Button */}
-        <NavLink to={`/idea/edit/${idea?.id}`} className="self-start">
-          <Button
-            className="
-          px-4 py-2
-          rounded
-          !bg-softBrown
-          !text-cream
-          transition-colors !font-sans
-        "
-            disabled={loading}
-            loading={loading}
-          >
-            Edit Idea
-          </Button>
-        </NavLink>
+          {/* Actions */}
+          <footer className="flex justify-end gap-3 pt-4 border-t border-borderGray">
+            <NavLink to={`/idea/edit/${idea.id}`}>
+              <Button
+                className="!bg-softBrown !text-cream px-5 py-2 rounded-lg font-sans"
+                disabled={loading}
+              >
+                Edit
+              </Button>
+            </NavLink>
 
-        <Button
-          className="
-          px-4 py-2
-          rounded
-          !bg-softBrown
-          !text-cream
-          transition-colors !font-sans"
-          onClick={deleteIdea}
-          disabled={loading}
-          loading={loading}
-        >
-          Delete Idea
-        </Button>
+            <Button
+              className="!bg-red-600 !text-white px-5 py-2 rounded-lg font-sans"
+              onClick={deleteIdea}
+              disabled={loading}
+            >
+              Delete
+            </Button>
+          </footer>
+        </div>
       </div>
     </div>
   );

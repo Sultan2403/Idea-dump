@@ -65,7 +65,7 @@ const getOneIdea = async (req, res) => {
   }
 
   try {
-    const idea = await ideasCollection.find({ userId, _id: ideaId });
+    const idea = await ideasCollection.findOne({ userId, _id: ideaId });
 
     if (!idea) {
       return res.status(404).json({ success: false, message: "Not found" });

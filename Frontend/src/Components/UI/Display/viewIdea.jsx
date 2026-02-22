@@ -8,7 +8,7 @@ export default function ViewIdea() {
   const { ideaId } = useParams();
   const { result, loading, error, getOneIdea, removeIdea } = useIdeas();
 
-  const idea = result.idea
+  const idea = result?.idea
 
   const truncatedText = useMemo(() => truncateText(idea?.text), [idea]);
 

@@ -22,6 +22,11 @@ const userSchema = new mongoose.Schema(
       select: false,
       minlength: 8,
     },
+    refreshTokenHash:{
+      type: String,
+      required: false,
+      select: false
+    }
   },
   { timestamps: true, strict: true },
 );

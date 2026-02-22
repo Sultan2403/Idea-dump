@@ -8,3 +8,6 @@ Ok more explicitly, fix up edit idea component i.e It fetches and sets idea data
 In short it's prob gonna be an overhaul cus idk who wrote that bs -_- (lol it was me XD)
 
 So yeah good luck
+
+
+I'm slowly realizing that there's a lot to do.... -_-

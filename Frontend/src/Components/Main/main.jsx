@@ -36,17 +36,19 @@ export default function Main() {
     return (
       <div className="flex items-center justify-center h-screen w-full">
         <div className="loader rounded-full border-8 border-t-8 border-gray-200 h-16 w-16" />
+        Loading...
       </div>
     );
   }
 
-  // Hard auth failure
-  if (error?.status === 401 || error?.status === 403) {
-    return <Navigate to="/login" replace />;
-  }
-
   // Other errors
   if (error) {
+    // Hard auth failure
+    console.log("eerr;", error)
+    if (error?.response?.status === 401 || error?.response?.status === 403) {
+      return <Navigate to="/login" replace />;
+    }
+
     return (
       <div className="flex items-center justify-center h-screen text-red-500">
         An error occurred. Please refresh the page.

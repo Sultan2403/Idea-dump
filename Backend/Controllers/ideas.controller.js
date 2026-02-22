@@ -16,7 +16,9 @@ const addNewIdea = async (req, res) => {
 const getUserIdeas = async (req, res) => {
   const userId = req.user.id;
   try {
-    const fetchedIdeas = await ideasCollection.find({ userId });
+    const fetchedIdeas = await ideasCollection
+      .find({ userId })
+      .sort({ createdAt: -1 });
     const ideas = fetchedIdeas
     res.status(200).json({ success: true, ideas });
   } catch (err) {

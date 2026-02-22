@@ -3,19 +3,21 @@ import { useParams, NavLink } from "react-router-dom";
 import Button from "@mui/material/Button";
 import useIdeas from "../../../Hooks/useIdeas";
 import truncateText from "../../../Utils/truncateText";
-import CustomModal from "../Modal/customModal"
+import CustomModal from "../Modal/customModal";
 
 export default function ViewIdea() {
   const { ideaId } = useParams();
   const { result, loading, error, getOneIdea, removeIdea } = useIdeas();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [expanded, setExpanded] = useState(false); // toggle full text
 
   const idea = result?.idea;
-  const truncatedText = truncateText(idea?.text);
 
   useEffect(() => {
     getOneIdea(ideaId);
   }, [ideaId]);
+
+  const truncatedText = truncateText(idea?.text);
 
   const deleteIdeaConfirmed = () => {
     removeIdea(ideaId);
@@ -23,10 +25,8 @@ export default function ViewIdea() {
   };
 
   if (loading) return <div className="p-4 text-gray-500">Loading...</div>;
-
   if (result?.message === "Deleted successfuly")
     return <div className="p-4 text-gray-500">Idea deleted successfully.</div>;
-
   if (error)
     return (
       <div className="p-4 text-red-500 flex flex-col space-y-2">
@@ -38,12 +38,11 @@ export default function ViewIdea() {
         </Button>
       </div>
     );
-
   if (!idea) return <div className="p-4 text-gray-500">No idea found</div>;
 
   return (
-    <div className="h-full bg-cream flex justify-center relative">
-      {/* Delete Confirmation Modal */}
+    <div className="h-full bg-cream flex justify-center overflow-y-auto">
+      {/* Delete Modal */}
       {showDeleteConfirm && (
         <CustomModal
           open={showDeleteConfirm}
@@ -53,8 +52,7 @@ export default function ViewIdea() {
             Delete Idea?
           </h2>
           <p className="text-secondaryText">
-            Are you sure you want to delete this idea? This action cannot be
-            undone.
+            Are you sure you want to delete this idea? This cannot be undone.
           </p>
           <div className="flex justify-end gap-3 pt-4">
             <Button
@@ -84,14 +82,22 @@ export default function ViewIdea() {
             <div className="h-px bg-borderGray" />
           </header>
 
-          {/* Preview */}
-          <section className="space-y-3">
+          {/* Preview / Full text */}
+          <section className="space-y-3 max-h-[60vh] overflow-y-auto">
             <span className="text-xs uppercase tracking-wider text-secondaryText">
-              Preview
+              Content
             </span>
             <p className="text-primaryText whitespace-pre-wrap leading-7">
-              {truncatedText}
+              {expanded ? idea.text : truncatedText}
             </p>
+            {!expanded && idea.text.length > 200 && (
+              <button
+                className="text-softBrown text-sm font-semibold hover:underline"
+                onClick={() => setExpanded(true)}
+              >
+                Continue reading...
+              </button>
+            )}
           </section>
 
           {/* Actions */}
@@ -104,7 +110,6 @@ export default function ViewIdea() {
                 Edit
               </Button>
             </NavLink>
-
             <Button
               className="!bg-red-600 !text-white px-5 py-2 rounded-lg font-sans"
               onClick={() => setShowDeleteConfirm(true)}

@@ -45,7 +45,7 @@ export default function Display() {
       setSaveSuccess(true);
       setRedirecting(true);
       setTimeout(() => {
-        navigate(`/idea/${result.idea._id}`);
+        navigate(`/idea/${result.idea.id}`);
       }, 800); // 0.8s for UX
     }
   }, [result]);

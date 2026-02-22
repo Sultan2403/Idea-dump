@@ -53,7 +53,7 @@ export default function ViewIdea() {
         </p>
 
         {/* Edit Button */}
-        <NavLink to={`/idea/edit/${idea?._id}`} className="self-start">
+        <NavLink to={`/idea/edit/${idea?.id}`} className="self-start">
           <Button
             className="
           px-4 py-2

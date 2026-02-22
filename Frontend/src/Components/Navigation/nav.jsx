@@ -12,12 +12,6 @@ import {
 
 export default function Nav() {
   const { result, error, loading, getAllIdeas } = useIdeas();
-  const {
-    data: authData,
-    loading: authLoading,
-    error: authError,
-    refresh,
-  } = useAuth();
 
   const fetchIdeas = () => {
     getAllIdeas();
@@ -26,19 +20,6 @@ export default function Nav() {
   useEffect(() => {
     fetchIdeas();
   }, []);
-
-  useEffect(() => {
-    if (authData?.tokens) {
-      setAccessToken(authData.tokens.accessToken);
-      setRefreshToken(authData.tokens.refreshToken);
-    }
-  }, [authData]);
-
-  useEffect(() => {
-    if (error?.status === 401 || error?.status === 403) {
-      refresh(getRefreshToken());
-    }
-  }, [error]);
 
   return (
     <nav className="bg-cream border-r border-borderGray min-h-screen w-full p-4 flex flex-col">
@@ -53,7 +34,7 @@ export default function Nav() {
           fullWidth
           startIcon={<RefreshCwIcon />}
           onClick={fetchIdeas}
-          loading={loading || authLoading}
+          loading={loading}
           variant="contained"
           className="!bg-softBrown text-white hover:bg-softBrown/90"
         >
@@ -88,7 +69,7 @@ export default function Nav() {
       )}
 
       {/* Error */}
-      {error && authError && (
+      {error && (
         <p className="text-red-500 text-sm">
           Failed to load ideas. <br /> Check your internet connection and try
           again.
@@ -96,15 +77,15 @@ export default function Nav() {
       )}
 
       {/* Idea List */}
-      {!loading && !error && !authError && !authLoading && (
+      {!loading && !error && (
         <ul className="flex-1 overflow-y-auto space-y-2">
           {result?.ideas?.length === 0 ? (
             <li className="text-gray-500 text-sm">No ideas yet...</li>
           ) : (
             result?.ideas?.map((idea) => (
-              <li key={idea._id}>
+              <li key={idea.id}>
                 <NavLink
-                  to={`/idea/${idea._id}`}
+                  to={`/idea/${idea.id}`}
                   className={({ isActive }) =>
                     `block p-2 rounded cursor-pointer transition
      ${isActive ? "bg-borderGray font-medium" : "hover:bg-borderGray"}`

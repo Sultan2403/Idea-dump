@@ -1,11 +1,11 @@
-const ideas = require("../DB/Models/ideas.model");
+const ideasCollection = require("../DB/Models/ideas.model");
 const mongoose = require("mongoose");
 
 const addNewIdea = async (req, res) => {
   const userId = req.user.id;
   const data = { ...req.body, userId };
   try {
-    const idea = await ideas.insertOne(data);
+    const idea = await ideasCollection.insertOne(data);
 
     res.status(201).json({ success: true, idea });
   } catch (error) {
@@ -16,9 +16,11 @@ const addNewIdea = async (req, res) => {
 const getUserIdeas = async (req, res) => {
   const userId = req.user.id;
   try {
-    const fetchedIdeas = await ideas.find({ userId });
-    res.status(200).json({ success: true, ideas: fetchedIdeas });
+    const fetchedIdeas = await ideasCollection.find({ userId });
+    const ideas = fetchedIdeas
+    res.status(200).json({ success: true, ideas });
   } catch (err) {
+    console.error(err)
     res.status(500).json({
       success: false,
       message: "An error occured",
@@ -35,7 +37,7 @@ const deleteAnIdea = async (req, res) => {
   }
 
   try {
-    const deleted = await ideas.findOneAndDelete({ _id: id, userId });
+    const deleted = await ideasCollection.findOneAndDelete({ _id: id, userId });
 
     if (!deleted) {
       return res
@@ -63,7 +65,7 @@ const getOneIdea = async (req, res) => {
   }
 
   try {
-    const idea = await ideas.find({ userId, _id: ideaId });
+    const idea = await ideasCollection.find({ userId, _id: ideaId });
 
     if (!idea) {
       return res.status(404).json({ success: false, message: "Not found" });
@@ -78,7 +80,7 @@ const getOneIdea = async (req, res) => {
 
 const updateIdea = async (req, res) => {
   try {
-    const updated = await ideas.findOneAndUpdate(
+    const updated = await ideasCollection.findOneAndUpdate(
       { _id: req.params.id, userId: req.user.id },
       req.body,
       { new: true, runValidators: true },
@@ -99,7 +101,7 @@ const updateIdea = async (req, res) => {
 
 const addNewIdeas = async (req, res) => {
   try {
-    const inserted = await ideas.insertMany(req.body, { ordered: true });
+    const inserted = await ideasCollection.insertMany(req.body, { ordered: true });
     res.status(201).json({ message: "Success", inserted });
   } catch (error) {
     console.error(error.message);

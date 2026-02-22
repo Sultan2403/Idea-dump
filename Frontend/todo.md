@@ -1,3 +1,4 @@
-Okay next up a smart navbar i.e It should be able to decide errors and smartly attemp a refresh if token has expired.
+Relax and chill :)
 
-And also fix the bug where the users ideas cant be found
+Lol do devs chill? XD
+Next task is frontend improvement and consistency and then speech-to-text feauture integration

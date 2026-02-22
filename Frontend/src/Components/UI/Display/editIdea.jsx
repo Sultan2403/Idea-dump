@@ -7,10 +7,12 @@ import { RefreshCcwIcon } from "lucide-react";
 
 export default function Edit_Idea() {
   const { ideaId } = useParams();
-  const { result: idea, loading, error, getOneIdea, updateIdea } = useIdeas();
+  const { result, loading, error, getOneIdea, updateIdea } = useIdeas();
 
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+
+  const idea = result?.idea
 
   const updatedIdea = idea.updated;
 

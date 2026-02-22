@@ -14,11 +14,11 @@ export default function Edit_Idea() {
 
   const idea = result?.idea
 
-  const updatedIdea = idea.updated;
+  const updatedIdea = idea?.updated;
 
-  const updateSuccess = idea?.message === "Idea updated successfully";
+  const updateSuccess = result?.message === "Idea updated successfully";
 
-  const updateErr = idea?.message === "An error occured";
+  const updateErr = result?.message === "An error occured";
 
   const isSaving = useMemo(() => loading && updatedIdea, [loading, idea]);
 
@@ -48,7 +48,7 @@ export default function Edit_Idea() {
   }, [ideaId]);
 
   useEffect(() => {
-    const base = idea?.updated || idea;
+    const base = result?.updated || idea;
     setTitle(base.title || "");
     setText(base.text || "");
   }, [idea]);

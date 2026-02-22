@@ -72,8 +72,8 @@ export default function ViewIdea() {
       )}
 
       {/* Main content card */}
-      <div className="w-full max-w-3xl px-6 py-10">
-        <div className="bg-white rounded-2xl shadow-sm border border-borderGray p-8 flex flex-col gap-8">
+      <div className="w-full max-w-3xl px-6 py-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-borderGray p-8 flex flex-col gap-6 max-h-[80vh] overflow-hidden">
           {/* Title */}
           <header className="space-y-3">
             <h1 className="text-3xl font-serif font-semibold text-primaryText">
@@ -83,9 +83,9 @@ export default function ViewIdea() {
           </header>
 
           {/* Preview / Full text */}
-          <section className="space-y-3 max-h-[60vh] overflow-y-auto">
+          <section className="space-y-3 flex-1 overflow-y-auto pr-2">
             <span className="text-xs uppercase tracking-wider text-secondaryText">
-              Content
+              {expanded ? "Content" : "Preview"}
             </span>
             <p className="text-primaryText whitespace-pre-wrap leading-7">
               {expanded ? idea.text : truncatedText}

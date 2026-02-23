@@ -70,7 +70,9 @@ const getOneIdea = async (req, res) => {
     const idea = await ideasCollection.findOne({ userId, _id: ideaId });
 
     if (!idea) {
-      return res.status(404).json({ success: false, message: "Idea not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Idea not found" });
     }
 
     res.status(200).json({ success: true, idea });
@@ -81,10 +83,9 @@ const getOneIdea = async (req, res) => {
 };
 
 const updateIdea = async (req, res) => {
-
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-  return res.status(400).json({ success: false, message: "Invalid ID" });
-}
+    return res.status(400).json({ success: false, message: "Invalid ID" });
+  }
 
   try {
     const updated = await ideasCollection.findOneAndUpdate(
@@ -101,7 +102,7 @@ const updateIdea = async (req, res) => {
 
     res
       .status(200)
-      .json({ success: true, message: "Idea updated successfully" });
+      .json({ success: true, message: "Idea updated successfully", updated });
   } catch (error) {
     console.error("An error occoured", error.message);
     res.status(500).json({ message: "An error occured", error: error.message });

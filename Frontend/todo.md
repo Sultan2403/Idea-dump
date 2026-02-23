@@ -1,13 +1,30 @@
-Relax and chill :)
+# Edit idea page architecture
 
-Lol do devs chill? XD
-Next task is frontend improvement and consistency and then speech-to-text feauture integration
+Parent component:
 
-Ok more explicitly, fix up edit idea component i.e It fetches and sets idea data into local state reliably. 
+- Fetches idea
 
-In short it's prob gonna be an overhaul cus idk who wrote that bs -_- (lol it was me XD)
+- Handles fetch loading / fetch error
 
-So yeah good luck
+- Passes idea as a prop
+
+Child EditIdea component:
+
+- Receives idea
+
+- Tracks local form state
+
+- Computes isEdited
+
+- Calls update endpoint
+
+- Shows saving / success / error UI
+
+# Main goal.
+No component guesses intent
 
 
-I'm slowly realizing that there's a lot to do.... -_-
+N.B: This feels so easy to implement now. 
+Note to future self: `Decide on architecture first so you don't frustrate yourself later`
+
+See ya! :)

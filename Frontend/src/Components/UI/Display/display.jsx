@@ -38,7 +38,7 @@ export default function Display() {
   }, [error]);
 
   useEffect(() => {
-    if (result.message === "Success") {
+    if (result.success === "Success") {
       setSaveErr(null);
       setText("");
       setTitle("");

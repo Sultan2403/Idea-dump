@@ -1,3 +1,9 @@
+// It's very buggy -_-
+
+
+// I'll get to work on it soon
+
+
 import { useParams, NavLink } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import useIdeas from "../../../Hooks/useIdeas";
@@ -7,51 +13,63 @@ import { RefreshCcwIcon } from "lucide-react";
 
 export default function Edit_Idea() {
   const { ideaId } = useParams();
-  const { result, loading, error, getOneIdea, updateIdea } = useIdeas();
+  const { result: data, loading, error, getOneIdea, updateIdea } = useIdeas();
 
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
+  const [update, setUpdate] = useState({});
+  const [isSaving, setIsSaving] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [updateErr, setUpdateErr] = useState(false);
 
-  const idea = result?.idea
-
-  const updatedIdea = idea?.updated;
-
-  const updateSuccess = result?.message === "Idea updated successfully";
-
-  const updateErr = result?.message === "An error occured";
-
-  const isSaving = useMemo(() => loading && updatedIdea, [loading, idea]);
-
-  const isFetching = useMemo(() => loading && !updatedIdea, [loading, idea]);
+  const idea = data?.idea;
+  const isFetching = loading && !idea;
 
   const isEdited = useMemo(() => {
-    const base = updatedIdea || idea;
-    return (
-      base.title?.trim() !== title.trim() || base.text?.trim() !== text.trim()
-    );
-  }, [updatedIdea, idea, title, text]);
+    if (!idea) return false;
 
-  const update = () => {
-    const updated = {
-      text: text.trim(),
-      title: title.trim(),
-    };
-    updateIdea({ id: ideaId, update: updated });
-  };
+    return update.title !== idea.title || update.text !== idea.text;
+  }, [update, idea]);
+
+  useEffect(() => {
+    getOneIdea(ideaId);
+  }, []);
+
+  useEffect(() => {
+    if (idea) {
+      setUpdate({
+        title: idea.title || "",
+        text: idea.text || "",
+      });
+    }
+  }, [idea]);
+
+  useEffect(() => {
+    if (!isSaving) return;
+
+    console.log(data)
+
+    if (data?.success && data?.message === "Idea updated successfully") {
+      setUpdateSuccess(true);
+    } else {
+      setUpdateErr(true);
+    }
+
+    setIsSaving(false);
+  }, [data, isSaving]);
 
   const fetchIdea = () => {
     getOneIdea(ideaId);
   };
 
-  useEffect(() => {
-    fetchIdea();
-  }, [ideaId]);
+  const handleChange = (e) => {
+    setUpdate((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
-  useEffect(() => {
-    const base = result?.updated || idea;
-    setTitle(base.title || "");
-    setText(base.text || "");
-  }, [idea]);
+  const saveUpdates = () => {
+    setIsSaving(true);
+    setUpdateErr(false);
+    setUpdateSuccess(false);
+    updateIdea({ id: ideaId, update });
+  };
 
   if (isFetching) {
     return (
@@ -59,29 +77,45 @@ export default function Edit_Idea() {
         <div className="max-w-3xl space-y-4 animate-pulse">
           <div className="h-8 bg-borderGray rounded w-2/3" />
           <div className="h-40 bg-borderGray rounded" />
+          Loading editor...
         </div>
       </div>
     );
   }
 
   if (error) {
-    return (
-      <>
+    if (error?.response?.data?.message === "Idea not found") {
+      return (
         <div className="min-h-screen bg-cream p-6 text-secondaryText">
-          Failed to load idea. Check your internet connection and try again.{" "}
-          <Button
-            fullWidth
-            startIcon={<RefreshCcwIcon />}
-            onClick={fetchIdea}
-            loading={loading}
-            variant="contained"
-            className="!bg-softBrown !text-white hover:bg-softBrown/90"
+          <NavLink
+            to={`/idea/${ideaId}`}
+            className="text-secondaryText hover:text-primaryText"
           >
-            Refresh
-          </Button>
+            ← Back
+          </NavLink>
+          Idea not found.
         </div>
-      </>
-    );
+      );
+    } else {
+      console.error(error)
+      return (
+        <>
+          <div className="min-h-screen bg-cream p-6 text-secondaryText">
+            Failed to load idea. Check your internet connection and try again.{" "}
+            <Button
+              fullWidth
+              startIcon={<RefreshCcwIcon />}
+              onClick={fetchIdea}
+              loading={loading}
+              variant="contained"
+              className="!bg-softBrown !text-white hover:bg-softBrown/90"
+            >
+              Refresh
+            </Button>
+          </div>
+        </>
+      );
+    }
   }
 
   if (!idea) {
@@ -109,8 +143,9 @@ export default function Edit_Idea() {
 
         {/* Title */}
         <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={update.title || ""}
+          onChange={(e) => handleChange(e)}
+          name="title"
           placeholder="Untitled idea"
           className="
             bg-transparent
@@ -127,7 +162,11 @@ export default function Edit_Idea() {
         <div className="border-t border-borderGray" />
 
         {/* Content */}
-        <InputField value={text} setValue={setText} />
+        <InputField
+          value={update.text || ""}
+          onChange={handleChange}
+          name="text"
+        />
 
         {/* Action bar */}
         <div className="flex justify-end space-x-3 pt-4 border-t border-borderGray">
@@ -137,7 +176,7 @@ export default function Edit_Idea() {
 
           <Button
             variant="contained"
-            onClick={update}
+            onClick={saveUpdates}
             loading={isSaving}
             disabled={!isEdited || isSaving}
           >

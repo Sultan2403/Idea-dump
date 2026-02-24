@@ -13,10 +13,12 @@ export default function Idea_Editor({ idea }) {
   const isEdited = useMemo(() => {
     if (!idea) return false;
 
+    const base = data?.updated || idea;
     return (
-      update?.title.trim() !== idea?.title || update?.text.trim() !== idea?.text
+      update?.title?.trim() !== base?.title?.trim() ||
+      update?.text?.trim() !== base?.text?.trim()
     );
-  }, [update, idea]);
+  }, [update, data, idea]);
 
   const saveUpdates = () => {
     updateIdea({ id: ideaId, update });
@@ -56,7 +58,7 @@ export default function Idea_Editor({ idea }) {
         value={update?.text || ""}
         onChange={handleChange}
         name="text"
-      />{" "}
+      />
       {/* Action bar */}
       <div className="flex justify-end space-x-3 pt-4 border-t border-borderGray">
         <NavLink to={`/idea/${ideaId}`}>

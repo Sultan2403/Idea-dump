@@ -1,28 +1,17 @@
-// It's very buggy -_-
-
-// I'll get to work on it soon
-
-import { useParams, NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import useIdeas from "../../../Hooks/useIdeas";
 import Button from "@mui/material/Button";
 import { RefreshCcwIcon } from "lucide-react";
+import useIdeas from "../../../Hooks/useIdeas";
 import Idea_Editor from "./idea_editor";
 
 export default function Edit_Idea() {
   const { ideaId } = useParams();
   const { result: data, loading, error, getOneIdea } = useIdeas();
 
-  const idea = data?.idea;
-  console.log(idea);
-
   useEffect(() => {
     getOneIdea(ideaId);
-  }, []);
-
-  const fetchIdea = () => {
-    getOneIdea(ideaId);
-  };
+  }, [ideaId]);
 
   if (loading) {
     return (
@@ -36,26 +25,6 @@ export default function Edit_Idea() {
     );
   }
 
-  if (error) {
-    return (
-      <>
-        <div className="min-h-screen bg-cream p-6 text-secondaryText">
-          Failed to load idea. Check your internet connection and try again.{" "}
-          <Button
-            fullWidth
-            startIcon={<RefreshCcwIcon />}
-            onClick={fetchIdea}
-            loading={loading}
-            variant="contained"
-            className="!bg-softBrown !text-white hover:bg-softBrown/90"
-          >
-            Refresh
-          </Button>
-        </div>
-      </>
-    );
-  }
-
   if (error?.response?.data?.message === "Idea not found") {
     return (
       <div className="min-h-screen bg-cream p-6 text-secondaryText">
@@ -64,9 +33,24 @@ export default function Edit_Idea() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="min-h-screen bg-cream p-6">
+        <p className="text-secondaryText mb-4">Failed to load idea.</p>
+        <Button
+          startIcon={<RefreshCcwIcon />}
+          onClick={() => getOneIdea(ideaId)}
+          variant="contained"
+        >
+          Retry
+        </Button>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-cream">
-      <div className="p-6 max-w-3xl flex flex-col space-y-8">
+    <div className="min-h-screen bg-cream p-6">
+      <div className="max-w-3xl space-y-8">
         {/* Top bar */}
         <div className="flex items-center justify-between">
           <NavLink
@@ -77,9 +61,10 @@ export default function Edit_Idea() {
           </NavLink>
 
           <span className="text-sm text-secondaryText">Editing</span>
-
-          <Idea_Editor idea={idea} />
         </div>
+
+        {/* Editor */}
+        <Idea_Editor idea={data?.idea} />
       </div>
     </div>
   );

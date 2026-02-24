@@ -1,30 +1,8 @@
-# Edit idea page architecture
+Prev task done.
 
-Parent component:
-
-- Fetches idea
-
-- Handles fetch loading / fetch error
-
-- Passes idea as a prop
-
-Child EditIdea component:
-
-- Receives idea
-
-- Tracks local form state
-
-- Computes isEdited
-
-- Calls update endpoint
-
-- Shows saving / success / error UI
-
-# Main goal.
-No component guesses intent
+Next up, prob refactor display page or navbar. 
 
 
-N.B: This feels so easy to implement now. 
-Note to future self: `Decide on architecture first so you don't frustrate yourself later`
+Well... I'm slowly running out of ideas. 
 
-See ya! :)
+Let's just have some fun :)

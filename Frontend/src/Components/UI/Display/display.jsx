@@ -14,7 +14,7 @@ export default function Display() {
   const [redirecting, setRedirecting] = useState(false);
   const navigate = useNavigate();
 
-  const { result, loading, error, createIdea } = useIdeas();
+  const { result: data, loading, error, createIdea } = useIdeas();
 
   const userData = getUserData();
 
@@ -24,6 +24,10 @@ export default function Display() {
     if (!text || !title) {
       setSaveErr("Text and title are required.");
       return;
+    } else if (text.length < 3) {
+      setSaveErr("Minimum length for text is three characters");
+    } else if (title.length < 3) {
+      setSaveErr("Minimum length for title is three characters");
     }
 
     setSaveErr(null);
@@ -33,22 +37,31 @@ export default function Display() {
   useEffect(() => {
     if (error)
       setSaveErr(
-        "An error occured while saving. <br/> Please try again later.",
+        error?.response?.data?.message ||
+          "An error occured while saving. <br/> Please try again later.",
       );
   }, [error]);
 
   useEffect(() => {
-    if (result.success === "Success") {
+    if (saveErr) {
+      setTimeout(() => {
+        setSaveErr(null);
+      }, 3000);
+    }
+  }, [saveErr]);
+
+  useEffect(() => {
+    if (data.success) {
       setSaveErr(null);
       setText("");
       setTitle("");
       setSaveSuccess(true);
       setRedirecting(true);
       setTimeout(() => {
-        navigate(`/idea/${result.idea.id}`);
+        navigate(`/idea/${data.idea.id}`);
       }, 800); // 0.8s for UX
     }
-  }, [result]);
+  }, [data]);
 
   return (
     <div className="px-10 py-8 bg-offwhite min-h-[400px] rounded-lg shadow-soft">
@@ -64,6 +77,7 @@ export default function Display() {
         autoFocus
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Untitled idea"
+        name="title"
         className="
             bg-transparent
             text-3xl
@@ -75,12 +89,9 @@ export default function Display() {
           "
       />
 
-      <InputField value={text} setValue={setText} />
+      <InputField value={text} name={"text"} setValue={setText} />
 
       <div className="my-2">
-        {saveErr && (
-          <p>N.B: Minimum length for text and title is 3 characters</p>
-        )}
         <Button
           className={`${loading ? "!bg-gray-400" : "!bg-softBrown"} !text-offwhite`}
           disabled={Boolean(loading)}

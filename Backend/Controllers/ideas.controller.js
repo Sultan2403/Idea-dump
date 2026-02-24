@@ -5,7 +5,7 @@ const addNewIdea = async (req, res) => {
   const userId = req.user.id;
   const data = { ...req.body, userId };
   try {
-    const idea = await ideasCollection.insertOne(data);
+    const idea = await ideasCollection.create(data);
 
     res.status(201).json({ success: true, idea });
   } catch (error) {

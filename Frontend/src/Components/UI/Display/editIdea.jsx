@@ -36,7 +36,9 @@ export default function Edit_Idea() {
   if (error) {
     return (
       <div className="min-h-screen bg-cream p-6">
-        <p className="text-secondaryText mb-4">Failed to load idea.</p>
+        <p className="text-secondaryText mb-4">
+          Failed to load idea.
+        </p>
         <Button
           startIcon={<RefreshCcwIcon />}
           onClick={() => getOneIdea(ideaId)}
@@ -60,7 +62,9 @@ export default function Edit_Idea() {
             ← Back
           </NavLink>
 
-          <span className="text-sm text-secondaryText">Editing</span>
+          <span className="text-sm text-secondaryText">
+            Editing
+          </span>
         </div>
 
         {/* Editor */}

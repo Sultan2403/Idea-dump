@@ -33,7 +33,7 @@ export default function Idea_Editor({ idea }) {
   }, [data]);
 
   return (
-    <div className="max-w-3xl mx-auto my-12 p-10 bg-cream rounded-xl shadow-xl flex flex-col space-y-8 border border-borderGray">
+    <div className="flex flex-col space-y-6">
       {/* Title */}
       <input
         value={update?.title || ""}
@@ -41,37 +41,44 @@ export default function Idea_Editor({ idea }) {
         name="title"
         placeholder="Untitled idea"
         className="
-        bg-transparent
-        text-5xl
-        font-serif
-        font-bold
-        text-primaryText
-        placeholder-secondaryText
-        outline-none
-        w-full
-        transition-colors
-        focus:text-softBrown
-      "
+    bg-transparent
+    text-4xl
+    font-serif
+    font-semibold
+    leading-tight
+    text-primaryText
+    placeholder-secondaryText
+    outline-none
+    w-full
+    transition-colors
+    focus:text-softBrown
+  "
       />
-
-      {/* Divider */}
-      <div className="border-t border-borderGray" />
 
       {/* Content */}
       <InputField
         value={update?.text || ""}
         onChange={handleChange}
         name="text"
-        className="min-h-[250px] text-primaryText text-lg leading-relaxed p-4 rounded-lg border border-borderGray bg-offwhite shadow-sm focus:ring-2 focus:ring-softBrown transition-all"
+        className="
+    min-h-[300px]
+    text-primaryText
+    text-lg
+    leading-relaxed
+    bg-transparent
+    border-none
+    outline-none
+    resize-none
+    focus:ring-0
+  "
       />
 
       {/* Action bar */}
-      <div className="flex justify-center items-center space-x-4 pt-6 border-t border-borderGray">
+      <div className="flex justify-end items-center gap-3 pt-8">
         <NavLink to={`/idea/${ideaId}`} className="flex-1">
           <Button
-            fullWidth
-            variant="outlined"
-            className="!text-primaryText !border-borderGray !hover:bg-offwhite !transition-colors"
+            variant="text"
+            className="!text-secondaryText hover:!text-primaryText"
           >
             Cancel
           </Button>

@@ -36,13 +36,12 @@ export default function Edit_Idea() {
   if (error) {
     return (
       <div className="min-h-screen bg-cream p-6">
-        <p className="text-secondaryText mb-4">
-          Failed to load idea.
-        </p>
+        <p className="text-secondaryText mb-4">Failed to load idea.</p>
         <Button
           startIcon={<RefreshCcwIcon />}
           onClick={() => getOneIdea(ideaId)}
           variant="contained"
+          className={`!bg-softBrown !text-offwhite`}
         >
           Retry
         </Button>

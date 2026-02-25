@@ -35,11 +35,12 @@ export default function Display() {
   };
 
   useEffect(() => {
-    if (error)
+    if (error) {
       setSaveErr(
         error?.response?.data?.message ||
-          "An error occured while saving. <br/> Please try again later.",
+          "An error occured while saving. Please try again later.",
       );
+    }
   }, [error]);
 
   useEffect(() => {

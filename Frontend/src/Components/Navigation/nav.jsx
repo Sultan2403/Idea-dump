@@ -3,12 +3,6 @@ import { PlusCircleIcon, RefreshCwIcon, RefreshCwOff } from "lucide-react";
 import Button from "@mui/material/Button";
 import useIdeas from "../../Hooks/useIdeas";
 import { useEffect } from "react";
-import useAuth from "../../Hooks/useAuth";
-import {
-  getRefreshToken,
-  setAccessToken,
-  setRefreshToken,
-} from "../../Helpers/Auth/tokens";
 
 export default function Nav() {
   const { result, error, loading, getAllIdeas } = useIdeas();
@@ -22,39 +16,44 @@ export default function Nav() {
   }, []);
 
   return (
-    <nav className="bg-cream border-r border-borderGray min-h-screen w-full p-4 flex flex-col">
-      <h2 className="text-xl font-semibold text-softBrown mb-6">
-        Idea Dump :)
-      </h2>
-      <p className="text-sm text-secondaryText font-sans mb-4 leading-relaxed">
-        Never lose a thought again.
-      </p>
-      <div className="mt-4 mb-6 flex flex-col gap-3 space-y-2">
-        <Button
-          fullWidth
-          startIcon={<RefreshCwIcon />}
-          onClick={fetchIdeas}
-          loading={loading}
-          variant="contained"
-          className="!bg-softBrown text-white hover:bg-softBrown/90"
-        >
-          Refresh
-        </Button>{" "}
-        <NavLink to="/">
+    <nav className="bg-cream border-r border-borderGray h-screen w-full p-4 flex flex-col overflow-hidden">
+      <div className="flex-shrink-0 border-b-primaryText">
+        <h2 className="text-xl font-semibold text-softBrown mb-6">
+          Idea Dump :)
+        </h2>
+
+        <p className="text-sm text-secondaryText font-sans mb-4 leading-relaxed">
+          Never lose a thought again.
+        </p>
+
+        <div className="mt-4 mb-6 flex flex-col gap-3 space-y-2">
           <Button
             fullWidth
-            startIcon={<PlusCircleIcon />}
+            startIcon={<RefreshCwIcon />}
+            onClick={fetchIdeas}
+            loading={loading}
             variant="contained"
-            className="!bg-softBrown !text-white hover:!bg-softBrown/90"
+            className="!bg-softBrown text-white hover:bg-softBrown/90"
           >
-            New Idea
+            Refresh
           </Button>
-        </NavLink>
-      </div>
 
-      <h2 className="text-sm uppercase tracking-wide text-secondaryText mb-4">
-        Your recent ideas
-      </h2>
+          <NavLink to="/">
+            <Button
+              fullWidth
+              startIcon={<PlusCircleIcon />}
+              variant="contained"
+              className="!bg-softBrown !text-white hover:!bg-softBrown/90"
+            >
+              New Idea
+            </Button>
+          </NavLink>
+        </div>
+
+        <h2 className="text-sm uppercase tracking-wide text-secondaryText mb-4">
+          Your recent ideas
+        </h2>
+      </div>
 
       {/* Loading Skeleton */}
       {loading && (

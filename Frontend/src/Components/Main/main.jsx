@@ -44,7 +44,7 @@ export default function Main() {
   // Other errors
   if (error) {
     // Hard auth failure
-    console.log("eerr;", error)
+    console.log("err", error);
     if (error?.response?.status === 401 || error?.response?.status === 403) {
       return <Navigate to="/login" replace />;
     }

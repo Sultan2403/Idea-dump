@@ -1,4 +1,4 @@
-import api from "./api.client";
+import api from "../Base/api.client";
 
 const ideasApi = {
   getAll: () => api.get("/ideas"),

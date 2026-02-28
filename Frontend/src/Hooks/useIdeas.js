@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ideasApi from "../Apis/api.ideas";
+import ideasApi from "../Apis/Others/api.ideas";
 
 export default function useIdeas() {
   const [result, setResult] = useState([]);

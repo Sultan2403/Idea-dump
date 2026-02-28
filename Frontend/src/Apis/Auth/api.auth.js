@@ -1,4 +1,5 @@
-import api from "./api.client";
+import api from "../Base/api.client";
+import z from '../Base/api.client'
 
 const authApi = {
   login: (payload) => api.post("/auth/login", payload),

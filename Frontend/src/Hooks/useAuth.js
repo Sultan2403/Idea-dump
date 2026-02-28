@@ -1,5 +1,5 @@
 import { useState } from "react";
-import authApi from "../Apis/api.auth";
+import authApi from "../Apis/Auth/api.auth";
 
 export default function useAuth() {
   const [data, setData] = useState(null);

@@ -1,5 +1,5 @@
 import Nav from "../Navigation/nav";
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet, Navigate, useNavigate } from "react-router-dom";
 import {
   getRefreshToken,
   setAccessToken,
@@ -11,28 +11,29 @@ import { useEffect, useState } from "react";
 
 export default function Main() {
   const { data, loading, error, refresh } = useAuth();
-  const [authChecked, setAuthChecked] = useState(false);
+  const refreshToken = getRefreshToken();
+  const navigate = useNavigate();
 
-  // Initial auth check (NO UI FLASH)
+  const [hasRefreshed, setHasRefreshed] = useState(false);
+
   useEffect(() => {
-    if (validateAccessToken()) {
-      setAuthChecked(true);
+    if (!validateAccessToken() && refreshToken && !hasRefreshed) {
+      refresh(refreshToken).finally(() => setHasRefreshed(true));
     } else {
-      refresh(getRefreshToken());
+      setHasRefreshed(true);
     }
-  }, []);
+  }, [refreshToken, hasRefreshed]);
 
-  // Store tokens after refresh
   useEffect(() => {
     if (data?.tokens) {
-      setAccessToken(data.tokens.accessToken);
-      setRefreshToken(data.tokens.refreshToken);
-      setAuthChecked(true);
+      const { accessToken, refreshToken } = data?.tokens;
+      setAccessToken(accessToken);
+      setRefreshToken(refreshToken);
+      navigate("/");
     }
   }, [data]);
 
-  // Block UI entirely until auth is resolved
-  if (!authChecked || loading) {
+  if (!hasRefreshed || loading) {
     return (
       <div className="flex items-center justify-center h-screen w-full">
         <div className="loader rounded-full border-8 border-t-8 border-gray-200 h-16 w-16" />
@@ -45,7 +46,7 @@ export default function Main() {
   if (error) {
     // Hard auth failure
     console.log("err", error);
-    if (error?.response?.status === 401 || error?.response?.status === 403) {
+    if (error?.response?.status === 401) {
       return <Navigate to="/login" replace />;
     }
 

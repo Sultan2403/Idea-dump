@@ -1,5 +1,6 @@
 import axios from "axios";
-import { getAccessToken } from "../Helpers/Auth/tokens";
+import { getAccessToken } from "../../Helpers/Auth/tokens";
+import handleErrors from "../Interceptors/errors.interceptor";
 
 const url = import.meta.env.VITE_API_URL;
 
@@ -18,6 +19,9 @@ api.interceptors.request.use((config) => {
 
 api.interceptors.response.use(
   (res) => res.data,
+  async (error) => {
+    return await handleErrors({error, apiInstance: api}); 
+  },
 );
 
 export default api;

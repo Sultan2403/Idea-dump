@@ -11,7 +11,7 @@ import Register from "./Components/Auth/Register";
 
 function App() {
   return (
-    <BrowserRouter basename="/Idea-dump">
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />}>
           <Route index element={<Display />} />

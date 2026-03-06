@@ -16,7 +16,7 @@ connectDB();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://sultan2403.github.io"],
+    origin: ["http://localhost:5173", "https://sultan2403.github.io", "https://idea-dump-pro.vercel.app/"],
   }),
 );
 app.use(express.json());

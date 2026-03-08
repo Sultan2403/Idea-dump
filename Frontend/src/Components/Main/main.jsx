@@ -22,7 +22,7 @@ export default function Main() {
     } else {
       setHasRefreshed(true);
     }
-  }, [refreshToken, hasRefreshed]);
+  }, [hasRefreshed]);
 
   useEffect(() => {
     if (data?.tokens) {
@@ -45,7 +45,7 @@ export default function Main() {
   // Other errors
   if (error) {
     // Hard auth failure
-    console.log("err", error);
+    console.error(error);
     if (error?.response?.status === 401) {
       return <Navigate to="/login" replace />;
     }

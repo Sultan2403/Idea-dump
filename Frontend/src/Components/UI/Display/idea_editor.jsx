@@ -42,7 +42,7 @@ export default function Idea_Editor({ idea }) {
         placeholder="Untitled idea"
         className="
     bg-transparent
-    text-4xl
+    text-3xl md:text-4xl
     font-serif
     font-semibold
     leading-tight
@@ -74,9 +74,10 @@ export default function Idea_Editor({ idea }) {
       />
 
       {/* Action bar */}
-      <div className="flex justify-end items-center gap-3 pt-8">
-        <NavLink to={`/idea/${ideaId}`} className="flex-1">
+      <div className="flex flex-col sm:flex-row justify-end items-stretch sm:items-center gap-3 pt-8">
+        <NavLink to={`/idea/${ideaId}`} className="w-full sm:flex-1">
           <Button
+            fullWidth
             variant="text"
             className="!text-secondaryText hover:!text-primaryText"
           >
@@ -87,6 +88,7 @@ export default function Idea_Editor({ idea }) {
         <Button
           variant="contained"
           onClick={saveUpdates}
+          fullWidth
           loading={loading}
           disabled={!isEdited || loading}
           className={`${!isEdited ? "!bg-gray-400 cursor-not-allowed" : "!bg-softBrown"} !text-white hover:!bg-softBrown/90 flex-1 shadow-md !transition-colors`}

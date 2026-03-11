@@ -72,11 +72,11 @@ export default function ViewIdea() {
       )}
 
       {/* Main content card */}
-      <div className="w-full max-w-3xl px-6 py-6">
-        <div className="bg-white rounded-2xl shadow-sm border border-borderGray p-8 flex flex-col gap-6 max-h-[80vh] overflow-hidden">
+      <div className="w-full max-w-3xl px-3 md:px-6 py-4 md:py-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-borderGray p-4 md:p-8 flex flex-col gap-6 max-h-[80vh] overflow-hidden">
           {/* Title */}
           <header className="space-y-3">
-            <h1 className="text-3xl font-serif font-semibold text-primaryText">
+            <h1 className="text-2xl md:text-3xl font-serif font-semibold text-primaryText break-words">
               {idea.title}
             </h1>
             <div className="h-px bg-borderGray" />
@@ -101,7 +101,7 @@ export default function ViewIdea() {
           </section>
 
           {/* Actions */}
-          <footer className="flex justify-end gap-3 pt-4 border-t border-borderGray">
+          <footer className="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-4 border-t border-borderGray">
             <NavLink to={`/idea/edit/${idea.id}`}>
               <Button
                 className="!bg-softBrown !text-cream px-5 py-2 rounded-lg font-sans"

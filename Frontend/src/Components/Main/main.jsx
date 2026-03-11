@@ -58,19 +58,19 @@ export default function Main() {
   }
 
   return (
-    <div className="flex h-screen w-full">
-      <aside className="w-[20%] h-full overflow-y-auto">
+    <div className="flex h-screen w-full flex-col md:flex-row">
+      <aside className="w-full md:w-[20rem] md:max-w-[30%] md:h-full overflow-y-auto border-b md:border-b-0 md:border-r border-borderGray">
         <Nav />
       </aside>
 
       <div className="flex-1 flex flex-col">
         <header className="p-4 border-b bg-cream shadow-soft">
-          <h1 className="text-2xl ml-8 font-serif font-semibold text-primaryText">
+          <h1 className="text-xl md:text-2xl md:ml-8 font-serif font-semibold text-primaryText text-center md:text-left">
             Dump Your Thoughts
           </h1>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-4">
+        <main className="flex-1 overflow-y-auto p-3 md:p-4">
           <Outlet />
         </main>
       </div>

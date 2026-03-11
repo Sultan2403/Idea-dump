@@ -65,13 +65,13 @@ export default function Display() {
   }, [data]);
 
   return (
-    <div className="px-10 py-8 bg-offwhite min-h-[400px] rounded-lg shadow-soft">
-      <h2 className="text-2xl font-serif font-medium text-softBrown mb-6">
+    <div className="w-full max-w-4xl mx-auto px-4 md:px-10 py-6 md:py-8 bg-offwhite min-h-[400px] rounded-lg shadow-soft">
+      <h2 className="text-xl md:text-2xl font-serif font-medium text-softBrown mb-4 md:mb-6 text-center md:text-left">
         {userData?.username
           ? `Welcome back, ${userData?.username}`
           : "Welcome Guest"}
       </h2>
-      <h2 className="text-2xl font-serif font-medium text-softBrown mb-6">
+      <h2 className="text-xl md:text-2xl font-serif font-medium text-softBrown mb-4 md:mb-6 text-center md:text-left">
         Never lose a thought again
       </h2>
 
@@ -83,7 +83,7 @@ export default function Display() {
         name="title"
         className="
             bg-transparent
-            text-3xl
+            text-2xl md:text-3xl
             font-serif
             font-semibold
             text-primaryText
@@ -94,7 +94,7 @@ export default function Display() {
 
       <InputField value={text} name={"text"} setValue={setText} />
 
-      <div className="my-2">
+      <div className="my-4 flex flex-col items-center md:items-start">
         <Button
           className={`${loading ? "!bg-gray-400" : "!bg-softBrown"} !text-offwhite`}
           disabled={Boolean(loading)}

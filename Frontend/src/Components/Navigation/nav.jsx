@@ -16,8 +16,8 @@ export default function Nav() {
   }, []);
 
   return (
-    <nav className="bg-cream border-r border-borderGray h-screen w-full p-4 flex flex-col overflow-hidden">
-      <div className="flex-shrink-0 border-b-primaryText">
+    <nav className="bg-cream md:border-r border-borderGray md:h-screen w-full p-4 flex flex-col overflow-hidden">
+      <div className="flex-shrink-0 border-b-primaryText text-center md:text-left">
         <h2 className="text-xl font-semibold text-softBrown mb-6">
           Idea Dump :)
         </h2>
@@ -77,7 +77,7 @@ export default function Nav() {
 
       {/* Idea List */}
       {!loading && !error && (
-        <ul className="flex-1 overflow-y-auto space-y-2">
+        <ul className="flex-1 overflow-y-auto space-y-2 text-left">
           {result?.ideas?.length === 0 ? (
             <li className="text-gray-500 text-sm">No ideas yet...</li>
           ) : (

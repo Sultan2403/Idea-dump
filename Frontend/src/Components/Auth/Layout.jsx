@@ -9,6 +9,8 @@ export default function AuthLayout({ title, subtitle, children, footer }) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        px: 2,
+        py: 3,
       }}
     >
       <Paper
@@ -16,7 +18,7 @@ export default function AuthLayout({ title, subtitle, children, footer }) {
         sx={{
           width: "100%",
           maxWidth: 400,
-          p: 4,
+          p: { xs: 2.5, sm: 4 },
           borderRadius: 3,
         }}
       >

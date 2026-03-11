@@ -15,7 +15,7 @@ export default function Edit_Idea() {
 
   if (loading) {
  return (
-   <div className="min-h-screen bg-cream p-6">
+   <div className="min-h-screen bg-cream p-4 md:p-6">
      <div className="max-w-3xl mx-auto space-y-6">
        <div className="flex items-center justify-between pb-4 border-b border-borderGray">
          <div className="h-4 w-32 bg-borderGray rounded animate-pulse" />
@@ -33,7 +33,7 @@ export default function Edit_Idea() {
 
   if (error?.response?.data?.message === "Idea not found") {
     return (
-      <div className="min-h-screen bg-cream p-6 text-secondaryText">
+      <div className="min-h-screen bg-cream p-4 md:p-6 text-secondaryText">
         Idea not found.
       </div>
     );
@@ -41,7 +41,7 @@ export default function Edit_Idea() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-cream p-6">
+      <div className="min-h-screen bg-cream p-4 md:p-6">
         <div className="max-w-3xl mx-auto bg-offwhite border border-borderGray rounded-lg p-6">
           <p className="text-secondaryText mb-4">Failed to load idea.</p>
           <Button
@@ -58,7 +58,7 @@ export default function Edit_Idea() {
   }
 
   return (
-    <div className="min-h-screen bg-cream p-6">
+    <div className="min-h-screen bg-cream p-4 md:p-6">
       <div className="max-w-3xl mx-auto space-y-8">
         {/* Top bar */}
         <div className="flex items-center justify-between pb-4 border-b border-borderGray">

@@ -61,8 +61,6 @@ export default async function handleErrors({ error, apiInstance }) {
 
     const response = await apiInstance(originalRequest);
 
-    console.log(response);
-
     retrySet.delete(requestId);
 
     return response;

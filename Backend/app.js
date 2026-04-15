@@ -16,12 +16,14 @@ connectDB();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://sultan2403.github.io", "https://idea-dump-pro.vercel.app"],
+    origin: [
+      "http://localhost:5173",
+      "https://sultan2403.github.io",
+      "https://idea-dump-pro.vercel.app",
+    ],
   }),
 );
 app.use(express.json());
-
-
 
 app.get("/", (req, res) => {
   res
@@ -30,7 +32,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/health", (req, res) => {
-  res.status(200).json({success: true, message: "Server says heyyy :)" });
+  res.status(200).json({ success: true, message: "Server says heyyy :)" });
 });
 
 // Routes
@@ -38,6 +40,6 @@ app.use("/ideas", ideasRouter);
 app.use("/auth", authRouter);
 app.use("/speech", audioRouter);
 
-app.use(errors()); 
+app.use(errors());
 
 module.exports = app;

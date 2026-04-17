@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const speech_to_text_controller = require("../Controllers/audio.controller");
+const audio_controller = require("../Controllers/audio.controller");
 
-router.post("/", speech_to_text_controller);
+router.post("/", audio_controller);
 
 module.exports = router;

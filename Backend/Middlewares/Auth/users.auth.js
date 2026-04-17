@@ -8,13 +8,15 @@ const authMiddleware = (req, res, next) => {
       .status(401)
       .json({ success: false, message: "No token provided" });
 
-  const token = authHeader.split(" ")[1];
   try {
+    const token = authHeader.split(" ")[1];
     const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded; // attach user info to request
     next(); // proceed to the controller
   } catch (err) {
-    return res.status(401).json({success:false, message: "Invalid or expired token" });
+    return res
+      .status(401)
+      .json({ success: false, message: "Invalid or expired token" });
   }
 };
 

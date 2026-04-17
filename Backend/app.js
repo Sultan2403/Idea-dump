@@ -5,7 +5,7 @@ const connectDB = require("./DB/Connections/connectDB");
 
 // Routers
 const ideasRouter = require("./Routers/ideas.route");
-const audioRouter = require("./Routers/speech-to-text.route");
+const audioRouter = require("./Routers/audio.route");
 const authRouter = require("./Routers/auth.route");
 
 // Middlewares

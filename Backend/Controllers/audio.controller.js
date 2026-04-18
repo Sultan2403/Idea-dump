@@ -1,6 +1,8 @@
 const audio_controller = async (req, res) => {
   try {
     console.log(req, req.file)
+
+    res.json({stuff:req.file})
   
   } catch (error) {
     console.error(error);

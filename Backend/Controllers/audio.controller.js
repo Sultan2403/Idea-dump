@@ -1,9 +1,13 @@
+const { transcribeAudio } = require("../Services/audio.service");
+
 const audio_controller = async (req, res) => {
   try {
-    console.log(req, req.file)
+    console.log(req.file);
 
-    res.json({stuff:req.file})
-  
+    const audio = req.file.buffer;
+
+    const transcribed = await transcribeAudio(audio);
+    res.json({ stuff: req.file, success: true, transcribed });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "An error occured", error: error.message });
